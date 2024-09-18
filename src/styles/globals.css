@@ -186,14 +186,12 @@ body {
 
 .sponsor-logos {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 20px;
 }
 
 .sponsor-logos img {
-  /* width: 100px;
-  height: auto; */
-  /* need to not be stretched */
   max-width: 100px;
   max-height: 100px;
   object-fit: contain;
