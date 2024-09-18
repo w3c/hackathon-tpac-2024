@@ -17,8 +17,8 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install Puppeteer
-        run: npm install puppeteer
+      - name: Install dependencies
+        run: npm install
 
       - name: Ensure screenshots directory exists
         run: mkdir -p public/screenshots
@@ -67,11 +67,18 @@ jobs:
               $SUBMISSIONS_FILE > tmp.json && mv tmp.json $SUBMISSIONS_FILE
           done
 
+      - name: Stage updated files (including package.json and package-lock.json)
+        run: |
+          git add public/screenshots/*.png
+          git add public/submissions.json
+          git add package.json package-lock.json || echo "No dependency changes to commit"
+
       - name: Commit changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/screenshots/*.png
-          git add public/submissions.json
-          git commit -m "Regenerated screenshots and updated submissions.json"
-          git push origin main
+          git commit -m "Regenerated screenshots and updated submissions.json" || echo "Nothing to commit"
+
+      - name: Push changes
+        run: |
+          git push origin main || echo "No changes to push"
