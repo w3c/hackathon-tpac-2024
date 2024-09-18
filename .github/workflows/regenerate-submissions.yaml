@@ -17,8 +17,9 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies (including Puppeteer)
+        run: |
+          npm install  # This installs all dependencies including Puppeteer
 
       - name: Ensure screenshots directory exists
         run: mkdir -p public/screenshots
