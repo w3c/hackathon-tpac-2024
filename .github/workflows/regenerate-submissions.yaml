@@ -1,0 +1,77 @@
+name: Regenerate Submissions and Screenshots
+
+on:
+  push:
+    branches:
+      - main  # Trigger this action only when changes are pushed to the main branch
+
+jobs:
+  regenerate-submissions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install Puppeteer
+        run: npm install puppeteer
+
+      - name: Ensure screenshots directory exists
+        run: mkdir -p public/screenshots
+
+      - name: Regenerate all screenshots and update submissions.json
+        run: |
+          SUBMISSIONS_FILE="public/submissions.json"
+
+          # Start fresh by clearing the submissions.json file
+          echo "[]" > $SUBMISSIONS_FILE
+
+          for file in public/submissions/*.html; do
+            SLUG=$(basename "$file" .html)
+
+            # Extract title and author from HTML
+            TITLE=$(grep -oP '(?<=<title>)(.*?)(?=</title>)' "$file")
+            AUTHOR=$(grep -oP '(?<=<meta name="author" content=")(.*?)(?=")' "$file")
+
+            # Log if title and author are missing
+            if [ -z "$TITLE" ]; then
+              echo "Warning: Missing <title> tag in $file"
+              TITLE="Unknown Title"
+            fi
+            if [ -z "$AUTHOR" ]; then
+              echo "Warning: Missing <meta name='author'> tag in $file"
+              AUTHOR="Unknown Author"
+            fi
+
+            SCREENSHOT="public/screenshots/$SLUG.png"
+
+            # Generate screenshot using Puppeteer
+            node -e "
+              const puppeteer = require('puppeteer');
+              (async () => {
+                const browser = await puppeteer.launch();
+                const page = await browser.newPage();
+                await page.goto('file://' + process.cwd() + '/$file');
+                await page.screenshot({ path: '$SCREENSHOT' });
+                await browser.close();
+              })();
+            "
+
+            # Append the new submission to the submissions.json file
+            jq --arg title "$TITLE" --arg author "$AUTHOR" --arg screenshot "/screenshots/$SLUG.png" --arg slug "$SLUG" \
+              '. += [{title: $title, author: $author, screenshot: $screenshot, slug: $slug}]' \
+              $SUBMISSIONS_FILE > tmp.json && mv tmp.json $SUBMISSIONS_FILE
+          done
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/screenshots/*.png
+          git add public/submissions.json
+          git commit -m "Regenerated screenshots and updated submissions.json"
+          git push origin main

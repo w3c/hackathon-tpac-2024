@@ -1,0 +1,112 @@
+name: Validate HTML Metadata on PRs
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  validate-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the PR branch
+      - name: Checkout PR branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Validate all HTML files in the PR branch
+        id: validate
+        run: |
+          ERROR_MESSAGE=""
+          VALIDATION_PASSED=false
+          
+          # Find all HTML files in the public/submissions/ directory
+          HTML_FILES=$(find public/submissions -name "*.html" || true)
+
+          # If no HTML files are found, skip validation
+          if [ -z "$HTML_FILES" ]; then
+            echo "No HTML files found in public/submissions/. Skipping validation."
+            exit 0
+          else
+            echo "Validating the following HTML files:"
+            echo "$HTML_FILES"
+          fi
+
+          # Loop through all HTML files and validate them
+          for file in $HTML_FILES; do
+            echo "Processing file: $file"
+
+            # Check for <meta name="author"> tag
+            AUTHOR=$(grep -Poz '(?s)<meta[^>]*name=["'\'']author["'\''][^>]*>' "$file" || true)
+            if [ -z "$AUTHOR" ]; then
+              ERROR_MESSAGE+="File $file is missing <meta name='author'> tag.\n"
+            fi
+
+            # Check for <title> tag
+            TITLE=$(grep -Poz '(?s)<title[^>]*>.*?</title>' "$file" || true)
+            if [ -z "$TITLE" ]; then
+              ERROR_MESSAGE+="File $file is missing <title> tag.\n"
+            fi
+          done
+
+          # Pass the error message to the next step
+          echo "ERROR_MESSAGE=$ERROR_MESSAGE" >> $GITHUB_ENV
+
+          # If there are no errors, mark validation as passed
+          if [ -z "$ERROR_MESSAGE" ]; then
+            echo "VALIDATION_PASSED=true" >> $GITHUB_ENV
+          else
+            echo "VALIDATION_PASSED=false" >> $GITHUB_ENV
+            exit 1  # Fail the step if validation fails
+          fi
+
+      # Always delete the existing validation comment (whether it passed or failed)
+      - name: Delete existing validation comment
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const validationComment = comments.find(comment => comment.user.login === 'github-actions[bot]' && (comment.body.includes('HTML Metadata Validation Failed') || comment.body.includes('HTML Validation Passed')));
+
+            if (validationComment) {
+              console.log("Deleting previous comment...");
+              await github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: validationComment.id
+              });
+            } else {
+              console.log("No existing comment found.");
+            }
+
+      # Post a new validation comment (either pass or fail)
+      - name: Post validation comment
+        uses: actions/github-script@v5
+        env:
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          ERROR_MESSAGE: ${{ env.ERROR_MESSAGE }}
+          VALIDATION_PASSED: ${{ env.VALIDATION_PASSED }}
+        with:
+          script: |
+            const issueNumber = context.payload.pull_request.number;
+            const prAuthor = `@${process.env.PR_AUTHOR}`;
+            
+            let message;
+            if (process.env.VALIDATION_PASSED === 'true') {
+              message = `**HTML Validation Passed**\n\nGreat job, ${prAuthor}! All required metadata is present.`;
+            } else {
+              message = `**HTML Metadata Validation Failed:**\n\n${prAuthor}, the following issues were found:\n\n${process.env.ERROR_MESSAGE}`;
+            }
+
+            await github.rest.issues.createComment({
+              issue_number: issueNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            })
