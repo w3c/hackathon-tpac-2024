@@ -17,9 +17,9 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install dependencies (including Puppeteer)
-        run: |
-          npm install  # This installs all dependencies including Puppeteer
+      # Install all dependencies (including Puppeteer)
+      - name: Install dependencies (Puppeteer included)
+        run: npm install
 
       - name: Ensure screenshots directory exists
         run: mkdir -p public/screenshots
@@ -68,11 +68,10 @@ jobs:
               $SUBMISSIONS_FILE > tmp.json && mv tmp.json $SUBMISSIONS_FILE
           done
 
-      - name: Stage updated files (including package.json and package-lock.json)
+      - name: Stage updated files
         run: |
           git add public/screenshots/*.png
           git add public/submissions.json
-          git add package.json package-lock.json || echo "No dependency changes to commit"
 
       - name: Commit changes
         run: |
