@@ -17,20 +17,21 @@ jobs:
         with:
           node-version: '16'
 
-      # Install all dependencies (including Puppeteer)
-      - name: Install dependencies (Puppeteer included)
-        run: npm install
+      # Install Puppeteer only for the action
+      - name: Install Puppeteer
+        run: npm install puppeteer
 
       - name: Ensure screenshots directory exists
         run: mkdir -p public/screenshots
 
-      - name: Regenerate all screenshots and update submissions.json
+      - name: Regenerate all screenshots and create a fresh submissions.json
         run: |
           SUBMISSIONS_FILE="public/submissions.json"
 
           # Start fresh by clearing the submissions.json file
           echo "[]" > $SUBMISSIONS_FILE
 
+          # Loop through all HTML files and regenerate the data
           for file in public/submissions/*.html; do
             SLUG=$(basename "$file" .html)
 
@@ -62,7 +63,7 @@ jobs:
               })();
             "
 
-            # Append the new submission to the submissions.json file
+            # Append the new submission to the fresh submissions.json file
             jq --arg title "$TITLE" --arg author "$AUTHOR" --arg screenshot "/screenshots/$SLUG.png" --arg slug "$SLUG" \
               '. += [{title: $title, author: $author, screenshot: $screenshot, slug: $slug}]' \
               $SUBMISSIONS_FILE > tmp.json && mv tmp.json $SUBMISSIONS_FILE
