@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { GetStaticProps } from "next";
 import { Submission } from "../../types";
 import submissions from "../../public/submissions.json";
@@ -15,11 +16,15 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Home: React.FC<Props> = ({ submissions }) => {
+  const assetPrefix = "/hackathon-tpac-2024"; // redundant path is workaround for gh pages to display images and submission routes correctly
   return (
     <div className="windows95-container">
       {/* Hero Section */}
       <section className="hero">
-        <img src="/icons/my-computer.png" alt="Hackathon icon" />
+        <img
+          src={`${assetPrefix}/icons/my-computer.png`}
+          alt="Hackathon icon"
+        />
         <h1>TPAC Hackathon 2024</h1>
         <p>
           Join fellow W3C attendees for a fun and fast-paced HTML/CSS challenge!
@@ -63,17 +68,17 @@ const Home: React.FC<Props> = ({ submissions }) => {
           {submissions.map(submission => (
             <div className="card" key={submission.slug}>
               <img
-                src={submission.screenshot}
+                src={`${assetPrefix}/submissions/${submission.slug}.png`}
                 alt={`${submission.title} screenshot`}
               />
               <h2>{submission.title}</h2>
               <p>by {submission.author}</p>
               <a
-                href={`/submissions/${submission.slug}.html`}
+                href={`${assetPrefix}/submissions/${submission.slug}.html`}
                 className="button"
               >
                 <img
-                  src="/icons/folder-open.png"
+                  src={`${assetPrefix}/icons/folder-open.png`}
                   alt="View icon"
                   className="icon"
                 />
@@ -166,11 +171,11 @@ const Home: React.FC<Props> = ({ submissions }) => {
           providing snacks, drinks, and prizes!
         </p>
         <div className="sponsor-logos">
-          <img src="/logos/adobe.png" alt="Adobe" />
-          <img src="/logos/google.png" alt="Google" />
-          <img src="/logos/holopin.png" alt="Holopin" />
-          <img src="/logos/mozilla.png" alt="Mozilla" />
-          <img src="/logos/w3c.png" alt="W3C" />
+          <img src={`${assetPrefix}/logos/adobe.png`} alt="Adobe" />
+          <img src={`${assetPrefix}/logos/google.png`} alt="Google" />
+          <img src={`${assetPrefix}/logos/holopin.png`} alt="Holopin" />
+          <img src={`${assetPrefix}/logos/mozilla.png`} alt="Mozilla" />
+          <img src={`${assetPrefix}/logos/w3c.png`} alt="W3C" />
         </div>
       </section>
 
