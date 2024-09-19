@@ -43,7 +43,7 @@ cd hackathon-tpac-2024
 <meta name="author" content="Your Name" />
 ```
 
-- If your project uses external CSS or JavaScript files, include them in the `submissions/` directory as well, and reference them in your HTML file.
+- If your project uses CSS or JavaScript, please include them directly within the HTML file. Use a `<style>` tag for CSS and a `<script>` tag for JavaScript. This ensures that everything is self-contained and easy to display.
 
 ### 4. Commit Your Changes
 
