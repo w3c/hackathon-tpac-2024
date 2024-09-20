@@ -20,7 +20,7 @@ Follow these steps to submit your project for the TPAC Hackathon.
 Once you've forked the repo, clone it to your local machine:
 
 ```bash
-git clone https://github.com/elenalape/hackathon-tpac-2024.git
+git clone https://github.com/w3c/hackathon-tpac-2024.git
 cd hackathon-tpac-2024
 ```
 
