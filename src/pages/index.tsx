@@ -68,7 +68,7 @@ const Home: React.FC<Props> = ({ submissions }) => {
           {submissions.map(submission => (
             <div className="card" key={submission.slug}>
               <img
-                src={`${assetPrefix}/submissions/${submission.slug}.png`}
+                src={`${assetPrefix}/screenshots/${submission.slug}.png`}
                 alt={`${submission.title} screenshot`}
               />
               <h2>{submission.title}</h2>
