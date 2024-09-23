@@ -37,17 +37,22 @@ const Home: React.FC<Props> = ({ submissions }) => {
             src={`${assetPrefix}/icons/my-computer.png`}
             alt="Hackathon icon"
           />
-          <h1>TPAC Hackathon 2024</h1>
+          <h1>Hackathon @ TPAC 2024</h1>
           <p>
-            Join fellow W3C attendees for a fun and fast-paced HTML/CSS
+            Join fellow W3C TPAC attendees for a fun and fast-paced HTML/CSS
             challenge! Test your coding skills, and compete for nerdy prizes.
           </p>
           <p>
             This hackathon is open to everyone attending TPAC in person. Enjoy
             hot snacks, meet new people, and show off your creativity in this
-            relaxed evening event.
+            competitive evening event in a relaxed setting.
           </p>
-          <p>Don’t miss out — space is limited, so register early!</p>
+          <p>
+            Don’t miss out — space is limited, so{" "}
+            <a href="https://www.w3.org/events/meetings/d33f09f9-a171-452e-8998-1c5130669f97/">
+              register early!
+            </a>
+          </p>
         </section>
 
         {/* Basic Info Section */}
@@ -69,7 +74,7 @@ const Home: React.FC<Props> = ({ submissions }) => {
           </p>
           <p>
             <strong>Location:</strong> Hilton Anaheim, Huntington, Concourse
-            level, 4th floor
+            level, 4th Floor.
           </p>
         </section>
 
@@ -106,19 +111,12 @@ const Home: React.FC<Props> = ({ submissions }) => {
           <h2>Frequently Asked Questions</h2>
 
           <div className="faq-item">
-            <h3>What is the TPAC Hackathon about?</h3>
-            <p>
-              This hackathon was created to encourage innovation and creativity
-              using HTML and CSS in a friendly competition format.
-            </p>
-          </div>
-
-          <div className="faq-item">
             <h3>Will there be food?</h3>
             <p>
-              Yes! We’ll have hot snacks available for everyone, but it won’t be
-              a full dinner. Make sure to grab a bite beforehand if you’re
-              hungry!
+              Yes! We’ll have hot snacks available for everyone, but it may not
+              be a full dinner. Make sure to grab a bite beforehand if you’re
+              hungry! Soft drinks and water will also be provided, and alcoholic
+              drinks can be purchased at the bar (for those 21+).
             </p>
           </div>
 
@@ -126,7 +124,11 @@ const Home: React.FC<Props> = ({ submissions }) => {
             <h3>Who can participate?</h3>
             <p>
               Participation is open to in-person attendees at the W3C TPAC event
-              in LA. If you’re here, you’re welcome to join!
+              in LA. If you’re here, you’re welcome to join. Please{" "}
+              <a href="https://www.w3.org/events/meetings/d33f09f9-a171-452e-8998-1c5130669f97/">
+                register early
+              </a>{" "}
+              to avoid disappointment.
             </p>
           </div>
 
@@ -142,8 +144,11 @@ const Home: React.FC<Props> = ({ submissions }) => {
           <div className="faq-item">
             <h3>Where do I submit my project?</h3>
             <p>
-              We will be using GitHub for project submissions. The repo link
-              will be provided soon.
+              We will be using GitHub for project submissions.{" "}
+              <a href="https://github.com/w3c/hackathon-tpac-2024">
+                Link to GitHub repo
+              </a>
+              .
             </p>
           </div>
 
@@ -159,19 +164,21 @@ const Home: React.FC<Props> = ({ submissions }) => {
           <div className="faq-item">
             <h3>How do I register?</h3>
             <p>
-              You can register{" "}
+              You can subscribe to the event{" "}
               <a href="https://www.w3.org/events/meetings/d33f09f9-a171-452e-8998-1c5130669f97/">
                 here
               </a>
-              , but please note it’s gated behind a W3C login.
+              . If you see more than 30 people have already registered, please
+              register anyway and show up on the day — last minute cancellations
+              may free up a spot for you.
             </p>
           </div>
 
           <div className="faq-item">
             <h3>What do I need to bring?</h3>
             <p>
-              Make sure to have your favorite text editor ready and a GitHub
-              account to submit your project.
+              Make sure to have a fully charged laptop with your favorite text
+              editor installed, and a GitHub account to submit your project.
             </p>
           </div>
         </section>
@@ -194,7 +201,7 @@ const Home: React.FC<Props> = ({ submissions }) => {
 
         {/* Footer */}
         <footer>
-          <p>© 2024 TPAC Hackathon. All rights reserved.</p>
+          <p>Hackathon @ TPAC 2024 is a W3C member organized event.</p>
         </footer>
       </div>
     </>
