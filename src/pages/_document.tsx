@@ -1,12 +1,11 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
+  const assetPrefix = "/hackathon-tpac-2024"; // redundant path is workaround for gh pages to display images and submission routes correctly
   return (
     <Html lang="en">
       <Head>
-        <meta name="description" content="TPAC Hackathon 2024" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href={`${assetPrefix}/favicon.ico`} />
       </Head>
       <body>
         <Main />
