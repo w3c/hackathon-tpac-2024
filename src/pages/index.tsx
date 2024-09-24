@@ -30,6 +30,10 @@ const Home: React.FC<Props> = ({ submissions }) => {
           name="description"
           content="Join fellow W3C TPAC attendees for a fun HTML/CSS challenge on Tuesday September 24th. Test your coding skills, and compete for nerdy prizes."
         />
+        <link
+          rel="stylesheet"
+          href="https://raw.githack.com/w3c/hackathon-tpac-2024/main/src/styles/globals.css"
+        />
       </Head>
       <div className="windows95-container">
         {/* Hero Section */}
