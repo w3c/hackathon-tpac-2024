@@ -1,7 +1,8 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
-  const assetPrefix = "/hackathon-tpac-2024"; // redundant path is workaround for gh pages to display images and submission routes correctly
+  const assetPrefix =
+    "https://raw.githubusercontent.com/w3c/hackathon-tpac-2024/refs/heads/main/public"; // redundant path is workaround for gh pages to display images and submission routes correctly
   return (
     <Html lang="en">
       <Head>
