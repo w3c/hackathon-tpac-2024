@@ -62,6 +62,76 @@ body {
   box-shadow: 4px 4px 0 #fff, -4px -4px 0 #808080;
 }
 
+/* Challenge Info */
+.challenge {
+  background-color: #fae17a;
+  color: black;
+  padding: 20px;
+  margin: 20px;
+  border: 3px solid black;
+  box-shadow: 6px 6px 0 #000, 4px 4px 0 #fff, -4px -4px 0 #808080;
+  text-align: center;
+}
+
+/* Headline styling for challenge section */
+.challenge h2 {
+  font-size: 28px;
+  color: #008080;
+  text-shadow: 2px 2px #fff;
+  margin-bottom: 10px;
+}
+
+.challenge-task {
+  font-size: 20px;
+  font-family: "MS Sans Serif", Tahoma, sans-serif;
+  color: #333;
+  padding: 10px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Rules List Styling */
+.rules-list {
+  margin-top: 20px;
+  padding-left: 0;
+  list-style-type: none;
+  text-align: left;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.rules-list li {
+  font-size: 18px;
+  background-color: #008080;
+  color: white;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid black;
+  position: relative;
+  box-shadow: 4px 4px 0 #fff, -4px -4px 0 #808080;
+  align-items: center;
+}
+
+.rules-list li::before {
+  content: "✔";
+  font-size: 20px;
+  color: #01cccc;
+  margin-right: 15px;
+}
+
+.rules-list a {
+  color: white;
+  text-decoration: underline;
+  display: inline-block;
+}
+
+.rules-list code {
+  font-size: 14px;
+  background-color: #008080;
+  color: rgb(196, 249, 111);
+  padding: 2px 5px;
+}
+
 .info h2 {
   font-size: 28px;
   margin-bottom: 10px;

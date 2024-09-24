@@ -83,6 +83,12 @@ const Home: React.FC<Props> = ({ submissions }) => {
           </p>
         </section>
 
+        {/* Challenge Section */}
+        <section className="challenge">
+          <h2>The Challenge</h2>
+          <p className="challenge-task">Coming soon...</p>
+        </section>
+
         {/* Submissions Section */}
         <section className="submissions">
           <h2>Explore the Submissions</h2>
@@ -96,7 +102,7 @@ const Home: React.FC<Props> = ({ submissions }) => {
                 <h2>{submission.title}</h2>
                 <p>by {submission.author}</p>
                 <a
-                  href={`${assetPrefix}/submissions/${submission.slug}.html`}
+                  href={`https://w3c.github.io/hackathon-tpac-2024/submissions/${submission.slug}.html`}
                   className="button"
                 >
                   <img
