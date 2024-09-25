@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="brian kardell">
+    <title>Improved Headings</title>
+    <style>
+    	.maybe {}
+    	code { color: maroon; }
+    	.note {
+    		border: 0.5px dashed gray;
+    		padding: 1rem;
+    	}
+    	h3 { margin-left: 1rem; }
+    	.note > span { font-weight: bold; background: black; color: white; }
+    	pre { padding: 2rem; }
+    </style>
+  </head>
+  <body>
+    <strike><div class="nope">
+	    <h2>The <code>&lt;h&gt;</code> Element</h2>
+	    <p>Just kidding, don't use this element.  It doesn't exist, but it should.  <a href="https://ksi.cpsc.ucalgary.ca/archives/WWW-TALK/www-talk-1991.messages/3.html">TimBL thought so in 1991</a>, and I still think it should exist, but it doesn't. As he said:</p>
+	    <blockquote> I would in fact prefer, instead of &lt;H1&gt;, &lt;H2&gt; etc for  
+headings [those come from the AAP DTD] to have a nestable  
+&lt;SECTION&gt;..&lt;/SECTION&gt; element, and a generic &lt;H&gt;..&lt;/H&gt; which at any  
+level within the sections would produce the required level of  
+heading.</blockquote>
+    </div></strike>
+    <div class="maybe">
+    	<h2>The <code>headingoffset</code> attribute</h2>
+	    <div class="note"><span>Note:</span> This is currently experimental and under development. You can check out <a href="https://github.com/smockle/headingoffset-polyfill">the polyfill</a> and <a href="https://github.com/smockle/headingoffset-polyfill">give feedback.</a></div>
+	    
+	    <p>When placed on a container element, the  <code>headingoffset</code> attribute adjusts the aria-level of headings inside, allowing internal contents to be written independently.  This is useful for helping stitch together content that is written as independent document fragments and with simple, existing authoring tools.  Nested containers add levels.</p>
+
+	    <h3>Example 1</h3>
+	    <pre><code>&lt;h1&gt;I’m a level-1 heading!&lt;/h1&gt;
+&lt;h2&gt;I’m a level-2 heading!&lt;/h2&gt;
+
+&lt;div headingoffset="1"&gt;
+  &lt;h1&gt;I’m a level-2 heading!&lt;/h1&gt;
+  &lt;h2&gt;I’m a level-3 heading!&lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+
+		<p>The practical upshot of this would give authors the ability to write content <em>almost</em> like Tim intended, by using <code>headingoffset="1"</code> on containers, and always using <code>&lt;h1&gt;</code> instead of his originally proposed <code>&lt;h&gt;</code></p>
+	    <pre><code>
+&lt;h1&gt;I’m a level-1 heading!&lt;/h1&gt;	    	
+&lt;section headingoffset="1"&gt;
+  &lt;h1&gt;I’m a level-2 heading!&lt;/h1&gt;
+    &lt;section headingoffset="1"&gt;
+      &lt;h1&gt;I’m a level-3 heading!&lt;/h1&gt;
+    &lt;/section&gt;
+  &lt;/section&gt;
+&lt;/section&gt;</code></pre>
+
+  </body>
+</html>
