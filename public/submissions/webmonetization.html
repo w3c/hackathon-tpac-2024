@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Monetization API Tutorial</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ff6f61;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        nav {
+            background-color: #ff5e50;
+            padding: 15px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #ff5e50;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            font-size: 1.1em;
+        }
+
+        code {
+            background-color: #f0f4f8;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            color: #d73a49;
+            display: block;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+
+        .code-example {
+            background-color: #f9f9fc;
+            padding: 20px;
+            border-left: 5px solid #ff5e50;
+            margin-bottom: 30px;
+        }
+
+        .alert {
+            background-color: #ffe5d9;
+            color: #d73a49;
+            padding: 15px;
+            border-left: 4px solid #ff5e50;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #ff6f61;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Web Monetization API Tutorial</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#setup">Setup</a></li>
+        <li><a href="#usage">Usage Example</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#footer">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <section id="introduction">
+        <h2>Introduction</h2>
+        <p>The Web Monetization API is an open JavaScript API that allows websites to accept micropayments using web monetization providers. This tutorial will walk you through the process of integrating the Web Monetization API into your website, setting up event listeners, and tracking monetization progress.</p>
+    </section>
+
+    <section id="setup">
+        <h2>Setup</h2>
+        <p>To start using Web Monetization, you need to add a payment pointer to your website. The payment pointer is included in the <code>&lt;meta&gt;</code> tag within your HTML document:</p>
+        <div class="code-example">
+            <code>
+&lt;meta name="monetization" content="$your-payment-pointer"&gt;
+            </code>
+        </div>
+        <div class="alert">
+            Note: Make sure to replace <strong>$your-payment-pointer</strong> with your actual payment pointer from your web monetization provider.
+        </div>
+    </section>
+
+    <section id="usage">
+        <h2>Usage Example</h2>
+        <p>Once you've added the payment pointer, you can interact with the Web Monetization API through JavaScript. Here's a basic example of how to check if monetization is enabled and respond to the events:</p>
+        <div class="code-example">
+            <code>
+if (document.monetization) {
+    console.log('Web Monetization is supported!');
+
+    document.monetization.addEventListener('monetizationstart', function(event) {
+        console.log('Monetization has started!');
+        // Handle the start of monetization here
+    });
+
+    document.monetization.addEventListener('monetizationprogress', function(event) {
+        console.log(`Amount: ${event.detail.amount}`);
+        console.log(`Asset Code: ${event.detail.assetCode}`);
+        console.log(`Scale: ${event.detail.assetScale}`);
+        // Track payment progress here
+    });
+} else {
+    console.log('Web Monetization is not supported on this browser.');
+}
+            </code>
+        </div>
+    </section>
+
+    <section id="events">
+        <h2>Web Monetization Events</h2>
+        <p>The Web Monetization API emits the following events you can listen for:</p>
+        <ul>
+            <li><strong>monetizationstart</strong>: Fired when monetization starts (e.g., when a user visits a page and starts streaming payments).</li>
+            <li><strong>monetizationprogress</strong>: Fired periodically as payments are made, providing details about the amount, asset code, and scale.</li>
+            <li><strong>monetizationstop</strong>: Fired when monetization stops (e.g., when the user navigates away or the payment provider stops streaming).</li>
+        </ul>
+    </section>
+</div>
+
+<footer id="footer">
+    <p>&copy; 2024 Web Monetization API Tutorial. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
