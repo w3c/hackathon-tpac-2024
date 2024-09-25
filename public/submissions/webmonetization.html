@@ -4,18 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Getting Started with the Web Monetization API</title>
-    <link rel="monetization" href="https://ilp.rafiki.money/laka_web" />
+    <link
+      rel="monetization"
+      onmonetization="console.log(event)"
+      href="https://ilp.rafiki.money/laka_web"
+    />
     <link
       rel="icon"
       href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAzMjYgMjIwIj48cGF0aCBmaWxsPSIjRkY3QTdGIiBkPSJNMjU2LjU1NSAxNzguNzI2djE5LjM3SDIxLjM5NVY2Ni44NjZsMzEuMTcuMDEuMDEtMjEuMjQtNTIuNDEtLjAydi4wM2gtLjAxdjE3Mi40MmguMDF2MS4yN2gyNTYuMzl2LjAxaDIxLjI0di00MC42MmgtMjEuMjRaIi8+PHBhdGggZmlsbD0iI0ZGQzhEQyIgZD0iTTIxLjM5NSAxOTguMDk2aDU4LjkxdjIxLjRoLTU4Ljkxdi0yMS40WiIvPjxwYXRoIGZpbGw9IiNBM0JFREMiIGQ9Ik0yMS40IDE2MC41ODN2NTguOTFIMHYtNTguOTFoMjEuNFoiLz48cGF0aCBmaWxsPSIjNTZCN0I1IiBkPSJNMjEuNDA2IDEwMS42Njl2NTguOTFILjAwNnYtNTguOTFoMjEuNFoiLz48cGF0aCBmaWxsPSIjRkY5ODUyIiBkPSJNODAuMDM1IDE5OC4wOTZoNTguOTF2MjEuNGgtNTguOTF2LTIxLjRaIi8+PHBhdGggZmlsbD0iIzk4RTFEMCIgZD0iTTEzOS4xMDUgMTk4LjA5Nmg1OC45MXYyMS40aC01OC45MXYtMjEuNFoiLz48cGF0aCBmaWxsPSIjODA3NUIzIiBkPSJNMTk4LjAxNSAxOTguMDk2aDU4LjkxdjIxLjRoLTU4Ljkxdi0yMS40WiIvPjxwYXRoIGZpbGw9IiM4MDc1QjMiIGQ9Ik0yNzcuNzk4IDE2OC43MzJ2NTAuNzVoLTIxLjR2LTUwLjc1aDIxLjRaIi8+PHBhdGggZmlsbD0iIzk4RTFEMCIgZD0iTTMyNS4yMjUgMTczLjcySDQ3LjU4NVYwaDI3Ny42NHYxNzMuNzJaIi8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTg2LjAyNSAxMDAuMjc2aDE4LjY2YzIuMjkgMCA0LjE0LTEuODUgNC4xNC00LjE0di0xOC42NWMwLTIuMjktMS44NS00LjE0LTQuMTQtNC4xNGgtMTguNjZjLTIuMjkgMC00LjE0IDEuODUtNC4xNCA0LjE0djE4LjY2YzAgMi4yOCAxLjg1IDQuMTMgNC4xNCA0LjEzWk0xODYuNDA1IDEzMC42NzZjMjMuODgxIDAgNDMuMjQtMTkuMzU5IDQzLjI0LTQzLjI0IDAtMjMuODgtMTkuMzU5LTQzLjI0LTQzLjI0LTQzLjI0cy00My4yNCAxOS4zNi00My4yNCA0My4yNGMwIDIzLjg4MSAxOS4zNTkgNDMuMjQgNDMuMjQgNDMuMjRaTTI2OC4wOTUgMTAwLjI3NmgxOC42NmMyLjI5IDAgNC4xNC0xLjg1IDQuMTQtNC4xNHYtMTguNjVjMC0yLjI5LTEuODUtNC4xNC00LjE0LTQuMTRoLTE4LjY2Yy0yLjI5IDAtNC4xNCAxLjg1LTQuMTQgNC4xNHYxOC42NmMwIDIuMjggMS44NSA0LjEzIDQuMTQgNC4xM1oiLz48L3N2Zz4K"
     />
     <script>
-      const link = document.querySelector('link[rel="monetization"]');
-      if (link.relList.supports("monetization")) {
-        link.addEventListener("monetization", (ev) => {
-          document.getElementById("exclusive").classList.remove("hidden");
-        });
-      }
+      document.addEventListener("DOMContentLoaded", (event) => {
+        console.log("DOM fully loaded and parsed");
+        const link = document.querySelector('link[rel="monetization"]');
+        if (link.relList.supports("monetization")) {
+          link.addEventListener("monetization", (ev) => {
+            document.getElementById("exclusive").classList.remove("hidden");
+          });
+        }
+      });
     </script>
 
     <style>
