@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/2001/REC-xhtml11-20010531/DTD/xhtml11-flat.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <title>TPAC 2024 Hackathon</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=us-ascii"/>
+    <meta name="author" content="David Benoit"/>
+  </head>
+  <body>
+ 
+    <a href="#" onclick="go();">
+      <img
+       src="https://upload.wikimedia.org/wikipedia/commons/3/31/Color_block.png"
+       alt="colour block - if you see this, you can't use it"
+       id="block"
+       ismap
+       />
+    </a>
+
+    <h1>ismap</h1>
+    <p>
+      Since time immemorial, the <code>img</code> element has had the
+      <code>ismap</code> attribute.  There are many things you can do
+      with it, and it was a staple of "fancy" web pages in the 90's.
+      But modern JS and CSS tools have all but deprecated it.
+    </p>
+
+    <p>
+      The <code>ismap</code> only works if the <code>img</code> is
+      inside an <code>a</code> (anchor/link), and will load the target
+      with an added query string specifying the <i>x,y</i> coordinates
+      of the pixel on which the mouse was clicked. 
+    </p>
+
+    <p>
+      The apache httpd server has had the <code>mod_imagemap</code>
+      module that allows developers to specify a mapping from points,
+      polygons, etc. to specific URLs.  In the age of SPA, this has
+      also become all but deprecated.
+    </p>
+
+    <p>
+      However, it can still be useful, even in a single page!
+    </p>
+
+    <p>
+      Click on the image above, and see what happens.  The URL will
+      change, and ... if I had more time I would have changed the
+      background colour to what you clicked.
+    </p>
+
+    <p id="where"/>
+
+    <hr/>
+    
+    <p>
+      PS: I built an <code>ismap</code> based interactive tour of the
+      campus map of where I did my undergrad, and then sold it to the
+      university in 1995.  Clicking on the campus map loaded a picture
+      that I took with a film camera, had developed, and scanned with
+      an old-school flatbed scanner.  Digital cameras were a thing,
+      but not good at all.
+    </p>
+
+    <p>
+      PPS: I wanted to do <code>&lt;blink/&gt;</code>, but it doesn't
+      work anymore.
+    </p>
+    
+  </body>
+
+  <footer>
+    <hr/>
+    made with emacs.
+    <script type="text/javascript">
+      function go(){
+        const qs = window.location.search;
+        const r = /\?([0-9]+),([0-9]+)/
+        const c = r.exec(qs);
+        const x = c[1];
+        const y = c[2];
+        console.log('qs=' + qs + ' x=' + x + ' y=' + y);
+        document.getElementById('where').innerHTML='x=' + x + ' y=' + y;
+      }
+    </script>
+  </footer>
+</html>
