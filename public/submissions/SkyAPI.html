@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="bacharakis">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
+        }
+
+        /* Skydiver Animation */
+        .sky {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(#87ceeb, #fff);
+            margin-top: 50px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        /* Skydiver */
+        .skydiver {
+            position: absolute;
+            width: 50px;
+            height: 150px;
+            top: -150px;
+            left: calc(50% - 25px);
+            animation: fall 5s linear infinite;
+        }
+
+        /* Skydiver body */
+        .body {
+            position: relative;
+            width: 50px;
+            height: 100px;
+            background-color: #ff4500;
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* Skydiver arms */
+        .body::before {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 10px;
+            background-color: #ff4500;
+            top: 20px;
+            left: -10px;
+        }
+
+        /* Skydiver head */
+        .head {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #FFD700;
+            border-radius: 50%;
+            top: -40px;
+            left: 10px;
+        }
+
+        /* Skydiver legs */
+        .left-leg, .right-leg {
+            position: absolute;
+            width: 10px;
+            height: 50px;
+            background-color: #ff4500;
+            bottom: 0;
+        }
+
+        .left-leg {
+            left: 10px;
+        }
+
+        .right-leg {
+            right: 10px;
+        }
+
+        /* Clouds */
+        .cloud {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: moveClouds 20s linear infinite;
+        }
+
+        /* Specific cloud instances */
+        .cloud1 {
+            width: 120px;
+            height: 60px;
+            top: 50px;
+            left: 10%;
+            animation-duration: 25s;
+        }
+
+        .cloud2 {
+            width: 150px;
+            height: 80px;
+            top: 150px;
+            left: 70%;
+            animation-duration: 18s;
+        }
+
+        .cloud3 {
+            width: 100px;
+            height: 50px;
+            top: 250px;
+            left: 40%;
+            animation-duration: 22s;
+        }
+
+        /* Falling animation */
+        @keyframes fall {
+            0% {
+                top: -150px;
+            }
+            100% {
+                top: 400px;
+            }
+        }
+
+        /* Clouds moving horizontally */
+        @keyframes moveClouds {
+            0% {
+                left: -200px;
+            }
+            100% {
+                left: 100vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Christos Bacharakis">
+    
+    <title>SkyAPI Tutorial: Design and Examples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
+        }
+        code {
+            background-color: #e7e7e7;
+            padding: 5px;
+            border-radius: 4px;
+            display: block;
+            margin: 10px 0;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 5px solid #2980b9;
+            overflow-x: auto;
+        }
+        .endpoint {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 20px 0;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        /* Skydiver Animation */
+        .sky {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(#87ceeb, #fff);
+            margin-top: 50px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .skydiver {
+            width: 50px;
+            height: 50px;
+            background-color: #f00;
+            border-radius: 50%;
+            position: absolute;
+            top: -50px;
+            left: calc(50% - 25px);
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -50px;
+            }
+            100% {
+                top: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+     <!-- Skydiver Animation Section -->
+     <div class="sky">
+        <!-- Skydiver -->
+        <div class="skydiver">
+            <div class="head"></div>
+            <div class="body">
+                <div class="left-leg"></div>
+                <div class="right-leg"></div>
+            </div>
+        </div>
+
+        <!-- Clouds -->
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+    </div>
+    <h1>SkyAPI Tutorial: Design and Examples</h1>
+
+    <p>In this tutorial, we will walk you through the design of <strong>SkyAPI</strong>, an API for skydiving enthusiasts. This API allows skydivers to check available airports, weather conditions, queues for skydiving, and the number of loads (flights) at each airport. Below is a detailed analysis of each endpoint with examples to help you understand how the API works.</p>
+
+    <h2>1. GET /airports</h2>
+    <div class="endpoint">
+        <h3>Purpose</h3>
+        <p>Fetches a list of airports that support skydiving, potentially filtered by user location, radius, or ideal weather conditions.</p>
+
+        <h3>Method</h3>
+        <p><strong>GET</strong></p>
+
+        <h3>URL</h3>
+        <p><code>/api/v1/skydiving/airports</code></p>
+
+        <h3>Authentication</h3>
+        <p>Required</p>
+
+        <h3>Parameters</h3>
+        <ul>
+            <li><strong>location</strong> (optional): User’s current latitude and longitude (comma-separated).</li>
+            <li><strong>radius</strong> (optional): Distance in kilometers to search for airports near the user.</li>
+            <li><strong>weather_conditions</strong> (optional): Boolean to filter airports with ideal skydiving conditions (based on weather).</li>
+        </ul>
+
+        <h3>Sample Request</h3>
+        <pre><code>GET /api/v1/skydiving/airports?location=51.5074,-0.1278&radius=100&weather_conditions=true
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+        <h3>Response</h3>
+        <pre><code>{
+    "airports": [
+        {
+            "id": 1,
+            "name": "Skydive London",
+            "location": {
+                "latitude": 51.505,
+                "longitude": -0.09
+            },
+            "ideal_conditions": true,
+            "contact_info": {
+                "phone": "+44 123456789",
+                "email": "info@skydive-london.com"
+            }
+        },
+        {
+            "id": 2,
+            "name": "Skydive Bristol",
+            "location": {
+                "latitude": 51.4545,
+                "longitude": -2.5879
+            },
+            "ideal_conditions": false,
+            "contact_info": {
+                "phone": "+44 987654321",
+                "email": "info@skydive-bristol.com"
+            }
+        }
+    ]
+}
+</code></pre>
+
+        <h3>Use Case</h3>
+        <p>A skydiver opens the app and wants to find airports within 100 km with ideal weather conditions to plan a skydiving session. This endpoint provides them with available options.</p>
+    </div>
+
+    <h2>2. GET /airport/{id}</h2>
+    <div class="endpoint">
+        <h3>Purpose</h3>
+        <p>Retrieves detailed information about a specific airport, including real-time queue data and load availability.</p>
+
+        <h3>Method</h3>
+        <p><strong>GET</strong></p>
+
+        <h3>URL</h3>
+        <p><code>/api/v1/skydiving/airport/{id}</code></p>
+
+        <h3>Authentication</h3>
+        <p>Required</p>
+
+        <h3>Path Parameter</h3>
+        <p><strong>id</strong>: The ID of the airport.</p>
+
+        <h3>Sample Request</h3>
+        <pre><code>GET /api/v1/skydiving/airport/1
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+        <h3>Response</h3>
+        <pre><code>{
+    "airport": {
+        "id": 1,
+        "name": "Skydive London",
+        "location": {
+            "latitude": 51.505,
+            "longitude": -0.09
+        },
+        "weather_conditions": {
+            "wind_speed": "10 mph",
+            "visibility": "Clear",
+            "ideal_for_skydiving": true
+        },
+        "loads": {
+            "total_loads_today": 5,
+            "next_load_time": "12:30 PM",
+            "open_spots": 2
+        },
+        "queue": [
+            {
+                "skydiver_id": 23,
+                "name": "John Doe",
+                "experience_level": "Intermediate",
+                "position_in_queue": 1,
+                "license_id": "A-12345",
+                "type_of_jump": "Tandem",
+                "aff_level": 5
+            },
+            {
+                "skydiver_id": 45,
+                "name": "Jane Smith",
+                "experience_level": "Advanced",
+                "position_in_queue": 2,
+                "license_id": "B-98765",
+                "type_of_jump": "Solo",
+                "aff_level": 7
+            }
+        ]
+    }
+}
+</code></pre>
+
+        <h3>Use Case</h3>
+        <p>A skydiver wants to check the availability at a specific airport (e.g., Skydive London), including current weather, available loads, and the queue for the next jump. The skydiver can see detailed information, such as the type of jump and AFF level, for each person in the queue.</p>
+    </div>
+
+    <h2>3. GET /airport/{id}/queue</h2>
+    <div class="endpoint">
+        <h3>Purpose</h3>
+        <p>Retrieves the current queue of skydivers waiting to jump at the selected airport.</p>
+
+        <h3>Method</h3>
+        <p><strong>GET</strong></p>
+
+        <h3>URL</h3>
+        <p><code>/api/v1/skydiving/airport/{id}/queue</code></p>
+
+        <h3>Authentication</h3>
+        <p>Required</p>
+
+        <h3>Path Parameter</h3>
+        <p><strong>id</strong>: The ID of the airport.</p>
+
+        <h3>Sample Request</h3>
+        <pre><code>GET /api/v1/skydiving/airport/1/queue
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+        <h3>Response</h3>
+        <pre><code>{
+    "queue": [
+        {
+            "skydiver_id": 23,
+            "name": "John Doe",
+            "experience_level": "Intermediate",
+            "position_in_queue": 1,
+            "expected_jump_time": "12:45 PM",
+            "license_id": "A-12345",
+            "type_of_jump": "Tandem",
+            "aff_level": 5
+        },
+        {
+            "skydiver_id": 45,
+            "name": "Jane Smith",
+            "experience_level": "Advanced",
+            "position_in_queue": 2,
+            "expected_jump_time": "1:00 PM",
+            "license_id": "B-98765",
+            "type_of_jump": "Solo",
+            "aff_level": 7
+        }
+    ]
+}
+</code></pre>
+
+        <h3>Use Case</h3>
+        <p>A skydiver checks the current queue to see how many people are ahead of them and their estimated jump time.</p>
+    </div>
+    <h2>4. GET /airport/{id}/loads</h2>
+<div class="endpoint">
+    <h3>Purpose</h3>
+    <p>Retrieves a list of loads (flights) at a specific airport. Each load includes details such as departure time, altitude of the drop, capacity, and a list of skydivers on board.</p>
+
+    <h3>Method</h3>
+    <p><strong>GET</strong></p>
+
+    <h3>URL</h3>
+    <p><code>/api/v1/skydiving/airport/{id}/loads</code></p>
+
+    <h3>Authentication</h3>
+    <p>Required</p>
+
+    <h3>Path Parameter</h3>
+    <p><strong>id</strong>: The ID of the airport.</p>
+
+    <h3>Response</h3>
+    <pre><code>{
+    "loads": [
+        {
+            "load_id": 1,
+            "departure_time": "12:30 PM",
+            "altitude": 15000,
+            "capacity": 5,
+            "skydivers": [
+                {
+                    "skydiver_id": 23,
+                    "name": "John Doe",
+                    "license_id": "A-12345",
+                    "experience_level": "Intermediate"
+                },
+                {
+                    "skydiver_id": 45,
+                    "name": "Jane Smith",
+                    "license_id": "B-98765",
+                    "experience_level": "Advanced"
+                }
+            ]
+        },
+        {
+            "load_id": 2,
+            "departure_time": "1:15 PM",
+            "altitude": 13000,
+            "capacity": 6,
+            "skydivers": [
+                {
+                    "skydiver_id": 12,
+                    "name": "Alice Johnson",
+                    "license_id": "C-76543",
+                    "experience_level": "Beginner"
+                }
+            ]
+        }
+    ]
+}
+</code></pre>
+
+    <h3>Use Case</h3>
+    <p>A skydiver wants to see detailed information about the upcoming loads (flights) at a specific airport. They can check the departure time, altitude, and capacity of each load, as well as see the list of skydivers who will be on board.</p>
+</div>
+
+
+   
+    
+</body>
+</html>
