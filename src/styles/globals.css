@@ -82,7 +82,7 @@ body {
 }
 
 .challenge-task {
-  font-size: 20px;
+  font-size: 40px;
   font-family: "MS Sans Serif", Tahoma, sans-serif;
   color: #333;
   padding: 10px;
@@ -101,8 +101,8 @@ body {
 }
 
 .rules-list li {
-  font-size: 18px;
-  background-color: #008080;
+  font-size: 24px;
+  background-color: #012727;
   color: white;
   padding: 10px;
   margin: 10px 0;
@@ -115,7 +115,7 @@ body {
 .rules-list li::before {
   content: "✔";
   font-size: 20px;
-  color: #01cccc;
+  color: #012626;
   margin-right: 15px;
 }
 
