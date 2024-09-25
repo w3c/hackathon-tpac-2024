@@ -1,4 +1,4 @@
-<!DOCTYPEhtml>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -27,6 +27,11 @@
         display: inline-block;
         caret-color: red;
         caret-shape: block;
+        font-size: 20px;
+        cursor: pointer;
+        width: 300px;
+        height: 200px;
+        border: 1px #999 solid;
       }
       h1 {
         color: #333;
@@ -43,11 +48,17 @@
       <h2><pre>caret: <'caret-color'> || <'caret-shape'></pre></h2>
       <h2><pre>caret-color: <'color'>></pre></h2>
       <h2><pre>caret-shape: <'shape'>></pre></h2>
-      <textarea id="cont1" class="box" style="width: 200px; height: 200px;  border: 1px #999 solid; caret-color: red; caret-shape: box">caret-color: red; caret-shape: box</textarea>
-      <textarea id="cont2" class="box" style="width: 200px; height: 200px;  border: 1px #999 solid; caret-color: green; caret-shape: box">caret-color: green; caret-shape: box</textarea>
-      <textarea id="cont3" class="box" style="width: 200px; height: 200px;  border: 1px #999 solid; caret-color: red; caret-shape: underscore">caret-color: red; caret-shape: underscore</textarea>
-      <textarea id="cont4" class="box" style="width: 200px; height: 200px;  border: 1px #999 solid; caret-color: green; caret-shape: underscore">caret-color: green; caret-shape: underscore</textarea>
+      <textarea id="cont1" class="box" style="caret-color: red; caret-shape: box">caret-color: red; caret-shape: box</textarea>
+      <textarea id="cont2" class="box" style="caret-color: green; caret-shape: box">caret-color: green; caret-shape: box</textarea>
+      <textarea id="cont3" class="box" style="caret-color: red; caret-shape: underscore">caret-color: red; caret-shape: underscore</textarea>
+      <textarea id="cont4" class="box" style="caret-color: green; caret-shape: underscore">caret-color: green; caret-shape: underscore</textarea>
     </div>
   </body>
+  <script>
+  cont1.onmouseover = () => cont1.focus();
+  cont2.onmouseover = () => cont2.focus();
+  cont3.onmouseover = () => cont3.focus();
+  cont4.onmouseover = () => cont4.focus();
+  </script>
 </html>
- 
+
