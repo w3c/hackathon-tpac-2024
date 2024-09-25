@@ -1,14 +1,86 @@
 [
   {
+    "title": "SkyAPI Tutorial: Design and Examples",
+    "author": "Christos Bacharakis",
+    "screenshot": "screenshots/SkyAPI.png",
+    "slug": "SkyAPI"
+  },
+  {
+    "title": "A building block",
+    "author": "Tantek Çelik",
+    "screenshot": "screenshots/a-building-block.png",
+    "slug": "a-building-block"
+  },
+  {
+    "title": "TPAC 2024 Hackathon",
+    "author": "David Benoit",
+    "screenshot": "screenshots/benoit.png",
+    "slug": "benoit"
+  },
+  {
     "title": "Improved Headings",
-    "author": "brian kardell",
-    "screenshot": "/screenshots/bkardell.png",
+    "author": "Brian Kardell",
+    "screenshot": "screenshots/bkardell.png",
     "slug": "bkardell"
   },
   {
-    "title": "Sample Project",
-    "author": "Elena",
-    "screenshot": "/screenshots/sample.png",
-    "slug": "sample"
+    "title": "Hackathon TPAC2024 Carlos Jeurissen",
+    "author": "Carlos Jeurissen",
+    "screenshot": "screenshots/carlosjeurissen.png",
+    "slug": "carlosjeurissen"
+  },
+  {
+    "title": "CSS Caret",
+    "author": "Hyojin",
+    "screenshot": "screenshots/hyojin.png",
+    "slug": "hyojin"
+  },
+  {
+    "title": "Dodger Dtudi",
+    "author": "Igarashi",
+    "screenshot": "screenshots/igarashi.png",
+    "slug": "igarashi"
+  },
+  {
+    "title": "Horizontal scroll story",
+    "author": "Kazumasa Okabe (kzms2)",
+    "screenshot": "screenshots/kzms2.png",
+    "slug": "kzms2"
+  },
+  {
+    "title": "CSS light-dark()",
+    "author": "Emilio Cobos Álvarez, Simon Pieters",
+    "screenshot": "screenshots/light-dark.png",
+    "slug": "light-dark"
+  },
+  {
+    "title": "Styling list markers",
+    "author": "Oriol Brufau",
+    "screenshot": "screenshots/marker.png",
+    "slug": "marker"
+  },
+  {
+    "title": "A single-page multi-page HTML file",
+    "author": "Martin Thomson",
+    "screenshot": "screenshots/mt.png",
+    "slug": "mt"
+  },
+  {
+    "title": "New User prompt for Keyboard and Pointer Lock",
+    "author": "Sun Shin",
+    "screenshot": "screenshots/new-keyboard-pointer-lock-prompt.png",
+    "slug": "new-keyboard-pointer-lock-prompt"
+  },
+  {
+    "title": "CSS pseudo-classes",
+    "author": "Estelle Weyl and Eric Meyer",
+    "screenshot": "screenshots/rating.png",
+    "slug": "rating"
+  },
+  {
+    "title": "Getting Started with the Web Monetization API",
+    "author": "Alex Lakatos",
+    "screenshot": "screenshots/webmonetization.png",
+    "slug": "webmonetization"
   }
 ]
