@@ -1,0 +1,139 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="author" title="Emilio Cobos Álvarez, Simon Pieters">
+<meta name="color-scheme" content="light dark">
+<meta name="viewport" content="width=device-width">
+<title>CSS light-dark()</title>
+
+<h1><code>light-dark()</code></h1>
+<marquee><h2>Making dark mode easy since 2024</h2></marquee>
+<ul id="mode">
+  <li><input aria-label="dark mode" name=mode type=radio id="dark">
+  <li><input aria-label="light mode" name=mode type=radio id="light"> </label></li>
+</ul>
+<p><code>light-dark(&lt;light-color>, &lt;dark-color>)</code> allows you to
+  easily set colors respecting the user or author preferred
+  <code>color-scheme</code>.
+
+<p>Change your OS (or devtools) light mode to see it in action, or click the
+  sun / moon icons to enforce light or dark mode respectively.</p>
+
+<style>
+  :root {
+    /* These are probably the only sane lines of CSS in this file */
+    --bg: light-dark(white, black);
+    --fg: light-dark(black, white);
+
+    /* We're going to do our light/dark effect effect by using a background
+     * gradient on the root, then background-clip on a descendant with the
+     * inverse gradient */
+    --bg-gradient: linear-gradient(to right, var(--bg), var(--bg) 50%, var(--fg) 50%, var(--fg));
+    --fg-gradient: linear-gradient(to right, var(--fg), var(--fg) 50%, var(--bg) 50%, var(--bg));
+    background-image: var(--bg-gradient);
+
+    /* Make everything monospace, but at a regular font-size */
+    font-family: monospace, monospace;
+
+    /* I use :has() because I hate performance */
+    &:has(#dark:checked) {
+      color-scheme: dark;
+    }
+    &:has(#light:checked) {
+      color-scheme: light;
+    }
+  }
+
+  body {
+    /* Show our inverse background, on the text */
+    background-image: var(--fg-gradient);
+    background-clip: text;
+
+    /* And make the text transparent */
+    color: transparent;
+
+    /* Just for fun, because it's the same as viewport units */
+    min-height: 100cqh;
+
+    /* I know how to center in CSS */
+    max-width: 30em;
+    text-align: center;
+    margin: 0 auto;
+
+    /* Our style element will flex to take the remaining space */
+    display: flex;
+    flex-direction: column;
+  }
+
+  style {
+    display: block;
+    overflow: auto;
+    white-space: pre;
+
+    /* Flexbox min sizing rules make me sad */
+    contain: size;
+
+    /* Absorb all available space */
+    flex: 1;
+    min-height: 15em;
+
+    /* Have you tried to read this centered? */
+    text-align: left;
+
+    /* We now want the monospace small font-size. Obvious huh */
+    font-family: monospace;
+
+    background-color: light-dark(#f5f5f5f5, #222222f5);
+    color: var(--fg);
+    padding: .5em 1em;
+
+    /* Scrollbar tracks are for dummies */
+    scrollbar-color: var(--fg) transparent;
+
+    /* Use border-image to get the inverse of our background */
+    border: 1em solid;
+    border-image: var(--fg-gradient) 1;
+  }
+
+  #mode {
+    padding: 0;
+    li {
+      display: inline-block;
+    }
+    label {
+      padding: 0 1em;
+    }
+  }
+
+  code {
+    font: inherit;
+    font-style: italic;
+  }
+
+  #dark::before {
+    content: "🌙";
+  }
+
+  #light::before {
+    content: "☀️";
+  }
+
+  #dark, #light {
+    display: inline-block;
+    padding: 1em;
+    appearance: none;
+    margin: 0 1em;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    &:checked {
+      /* We only need the border on the dark side */
+      border-color: white;
+    }
+  }
+
+  footer {
+    margin-top: 1em;
+  }
+</style>
+<footer>
+  &copy; please don't
+</footer>
