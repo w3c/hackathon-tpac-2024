@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="author" content="Kazumasa Okabe (kzms2)" />
+<title>Created using only HTML/CSS, without JS and img.</title>
+<link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+<style>
+/************************************\
+global setting
+\************************************/
+:root {
+    --util-grid: 8px;
+
+    --contents-width: 1200vw;
+
+    --header-color: rgba(255, 255, 255, 0.8);
+
+    --comment-num: 8;
+    --comment-height: 150px;
+    --comment-margin: 40px;
+
+    --ground-height: 40px;
+}
+@font-face {
+    font-family: 'Windows Dots';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Windows Dots'), url('https://fonts.cdnfonts.com/s/71669/Windows Dots.woff') format('woff');
+}
+html,
+body,
+main {
+    height: 100%;
+    width: 100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Windows Dots', sans-serif;
+    font-weight: bold;
+    overflow-y: hidden;
+}
+/************************************\
+header
+\************************************/
+header {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    text-align: center;
+    color: #03044a;
+    text-shadow: 0 0 2px #000;
+    h1 {
+        font-size: 32px;
+        margin: 0;
+        padding: calc(var(--util-grid) * 2) var(--util-grid) 0;
+        text-wrap: pretty;
+        -webkit-text-stroke-width: 0.1px;
+        -webkit-text-stroke-color: var(--header-color);
+    }
+    p {
+        margin: 0;
+        color: var(--header-color);
+        a {
+            color: var(--header-color);
+        }
+    }
+}
+
+/************************************\
+contents
+\************************************/
+main {
+    display: block;
+    h2 {
+        margin: 0;
+    }
+    .materials {
+        width: var(--contents-width);
+        overflow-y: hidden;
+        > div {
+            position: absolute;
+            pointer-events: none;
+            width: var(--contents-width);
+        }
+
+        .comment {
+            position: fixed;
+            z-index: 2;
+            width: 100vw;
+            height: 300px;
+            bottom: 150px;
+            pointer-events: unset;
+
+            h3 {
+                offset: inherit;
+                opacity: 0 !important;
+                pointer-events: none !important;
+            }
+
+            ol {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                height: calc(var(--comment-height) + 20px) ;
+                overflow: hidden;
+
+                li {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: var(--comment-height);
+                    margin-bottom: var(--comment-margin);
+                    animation: move-comment 1s steps(var(--comment-num)) forwards;
+                    animation-timeline: scroll(x root);
+                    p {
+                        position: relative;
+                        box-sizing: border-box;
+                        font-size: 20px;
+                        width: 300px;
+                        height: var(--comment-height);
+                        padding: calc(var(--util-grid)) calc(var(--util-grid) * 2);
+                        background-color: #fff;
+                        border-radius: calc(var(--util-grid));
+                        &::after {
+                            content: '';
+                            border-width: 10px;
+                            border-color: #fff #fff transparent transparent;
+                            border-style: solid;
+                            position: absolute;
+                            display: inline-block;
+                            top: 100%;
+                            left: calc(50% - 5px);
+                        }
+                        strong {
+                            background: linear-gradient(transparent 60%, rgba(238, 119, 82, 0.74) 60%);
+                        }
+                        br {
+                            margin-bottom: 0.5em;
+                            display: block;
+                            content: " ";
+                        }
+                    }
+                    &.comment__item--center {
+                        p {
+                            place-items: center;
+                            display: grid;
+                            font-size: 26px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .background {
+            height: calc(100% - var(--ground-height));
+            background-image: linear-gradient(0deg, rgba(173,166,86,1) 0%, rgba(88,174,181,1) 3%, rgba(52,116,156,1) 25%, rgba(216,124,62,1) 50%, rgba(61,122,126,1) 75%, rgba(17,48,70,1) 100%);
+            background-position: 0 100%;
+            animation: move-background 1s ease-in-out;
+            animation-timeline: scroll(x nearest);
+            background-size: 100% 400%;
+        }
+
+        .sky {
+            position: fixed;
+            height: 250px;
+            overflow: hidden;
+            .sky__near {
+                position: absolute;
+                display: flex;
+                top: 50px;
+                left: -100px;
+                opacity: 0.9;
+                transform: scaleX(-1);
+                .cloud {
+                    animation-direction:reverse;
+                }
+            }
+            .sky__far {
+                position: absolute;
+                display: flex;
+                top: 50px;
+                left: 0;
+                transform: scale(0.5);
+                transform-origin: 0 0;
+                opacity: 0.5;
+            }
+            .cloud {
+                position: relative;
+                width: 175px;
+                height: 60px;
+                background: #ECEFF1;
+                box-shadow: 5px 5px rgba(0,0,0,0.2);
+                border-radius: 50px;
+                margin: 100px 300px;
+                animation: move-sky 1s linear;
+                animation-timeline: scroll(x root);
+                &::before, 
+                &::after{
+                    content: "";
+                    position: relative;
+                    display: inline-block;
+                    background: inherit;
+                    border-radius: inherit;
+                }
+                &::before {
+                    width: 50px;
+                    height: 50px;
+                    top: -60px;
+                    left: 25px;
+                }
+                &::after {
+                    width: 90px;
+                    height: 90px;
+                    top: -35px;
+                    left: 20px;
+                }
+            }
+        }
+
+        .planet {
+            position: fixed;
+            width: 100%;
+            
+            .planet__sun {
+                position: absolute;
+                top: calc(var(--util-grid) * 2);
+                right: calc(var(--util-grid) * 2);
+                border: 30px solid #ffa600;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                animation: move-sun 1s linear;
+                animation-timeline: scroll(x root);
+            }
+            .planet__moon {
+                position: absolute;
+                top: calc(var(--util-grid) * 2);
+                left: calc(var(--util-grid) * 2);
+                border: 30px solid #fff789;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                animation: move-sun 1s linear;
+                animation-timeline: scroll(x root);
+            }
+        }
+        .distantview {
+            position: fixed;
+            bottom: 40px;
+            height: 500px;
+            overflow: hidden;
+            .distantview__near {
+                position: absolute;
+                top: -100px;
+                left: -180px;
+                display: flex;
+                opacity: 0.6;
+            }
+            .distantview__far {
+                position: absolute;
+                display: flex;
+                top: 0;
+                left: -200px;
+                transform: scale(0.5);
+                transform-origin: 0 0;
+                opacity: 0.5;
+            }
+            .mountain {
+                position: relative;
+                border-style: solid;
+                border-width: 500px;
+                border-color: transparent transparent #2C5721 transparent;
+                margin: 0 300px;
+                animation: move-distantview 1s linear;
+                animation-timeline: scroll(x root);
+            }
+        }
+    
+        .ground {
+            position: fixed;
+            top: calc(100% - 40px);
+            left: 0;
+            height: 40px;
+            width: var(--contents-width);
+            box-shadow: 0 -2px 0 #517F6D;
+            border-top: 8px solid #5CC850;
+            background-color: #BF9864;
+            animation: move-ground 1s linear;
+            animation-timeline: scroll(x root);
+            &::after {
+                content: '';
+                width: 6px;
+                height: 6px;
+                position: absolute;
+                left: 40px;
+                bottom: 15px;
+                border-radius: 50%;
+                background-color: #D8BD70;
+                /* It's chaos😇 */
+                box-shadow: 
+                    100px 0px 0 #D8BD70, 100px 0px 0 #D8BD70, 200px 0px 0 #D8BD70, 300px 0px 0 #D8BD70, 400px 0px 0 #D8BD70, 500px 0px 0 #D8BD70, 600px 0px 0 #D8BD70, 700px 0px 0 #D8BD70, 800px 0px 0 #D8BD70, 900px 0px 0 #D8BD70, 1000px 0px 0 #D8BD70, 1100px 0px 0 #D8BD70, 1200px 0px 0 #D8BD70, 1300px 0px 0 #D8BD70, 1400px 0px 0 #D8BD70, 1500px 0px 0 #D8BD70, 1600px 0px 0 #D8BD70, 1700px 0px 0 #D8BD70, 1800px 0px 0 #D8BD70, 1900px 0px 0 #D8BD70, 2000px 0px 0 #D8BD70,
+
+                    40px -10px 0 #D8BD70, 140px -10px 0 #D8BD70, 240px -10px 0 #D8BD70, 340px -10px 0 #D8BD70, 440px -10px 0 #D8BD70, 540px -10px 0 #D8BD70, 640px -10px 0 #D8BD70, 740px -10px 0 #D8BD70, 840px -10px 0 #D8BD70, 940px -10px 0 #D8BD70, 1040px -10px 0 #D8BD70, 1140px -10px 0 #D8BD70, 1240px -10px 0 #D8BD70, 1340px -10px 0 #D8BD70, 1440px -10px 0 #D8BD70, 1540px -10px 0 #D8BD70, 1640px -10px 0 #D8BD70, 1740px -10px 0 #D8BD70, 1840px -10px 0 #D8BD70, 1940px -10px 0 #D8BD70, 2040px -10px 0 #D8BD70;
+            }
+        }
+
+        /* Quoted from own page */
+        .character {
+            position: fixed;
+            height: 100%;
+            top: calc(100% - var(--ground-height) - 78px);
+            left: 50%;
+            margin-left: -30px;
+
+            .character__kzms2 {
+                width: 60px;
+                span {
+                    transform: scale(2);
+                    display: inline-block;
+                    width: 2px;
+                    margin-left: -2px;
+                    height: 2px;
+                    /* It's chaos😇 */
+                    box-shadow: 14px 0px 0 #000, 18px 0px 0 #000, 12px 2px 0 #000, 14px 2px 0 #000, 16px 2px 0 #000, 18px 2px 0 #000, 20px 2px 0 #000, 22px 2px 0 #000, 12px 4px 0 #000, 14px 4px 0 #000, 16px 4px 0 #000, 18px 4px 0 #000, 20px 4px 0 #000, 22px 4px 0 #000, 12px 6px 0 #000, 14px 6px 0 #F1BB93, 16px 6px 0 #F1BB93, 18px 6px 0 #F1BB93, 20px 6px 0 #F1BB93, 22px 6px 0 #000, 10px 8px 0 #F1BB93, 12px 8px 0 #F1BB93, 14px 8px 0 #683037, 16px 8px 0 #F1BB93, 18px 8px 0 #F1BB93, 20px 8px 0 #683037, 22px 8px 0 #4e453f, 24px 8px 0 #F1BB93, 12px 10px 0 #F1BB93, 14px 10px 0 #683037, 16px 10px 0 #F1BB93, 18px 10px 0 #F1BB93, 20px 10px 0 #683037, 22px 10px 0 #F1BB93, 12px 12px 0 #F1BB93, 14px 12px 0 #F1BB93, 16px 12px 0 #F1BB93, 18px 12px 0 #F1BB93, 20px 12px 0 #F1BB93, 22px 12px 0 #F1BB93, 6px 14px 0 #F1BB93, 8px 14px 0 #F1BB93, 10px 14px 0 #FC323D, 12px 14px 0 #FC323D, 14px 14px 0 #FC323D, 16px 14px 0 #F1BB93, 18px 14px 0 #F1BB93, 20px 14px 0 #FC323D, 22px 14px 0 #FC323D, 24px 14px 0 #FC323D, 6px 16px 0 #F1BB93, 8px 16px 0 #F1BB93, 10px 16px 0 #F1BB93, 12px 16px 0 #FC323D, 14px 16px 0 #FC323D, 16px 16px 0 #FC323D, 18px 16px 0 #FC323D, 20px 16px 0 #FC323D, 22px 16px 0 #FC323D, 24px 16px 0 #F1BB93, 12px 18px 0 #FC323D, 14px 18px 0 #FC323D, 16px 18px 0 #FC323D, 18px 18px 0 #FC323D, 20px 18px 0 #FC323D, 22px 18px 0 #FC323D, 24px 18px 0 #F1BB93, 26px 18px 0 #F1BB93, 12px 20px 0 #FC323D, 14px 20px 0 #FC323D, 16px 20px 0 #FC323D, 18px 20px 0 #FC323D, 20px 20px 0 #FC323D, 22px 20px 0 #FC323D, 24px 20px 0 #F1BB93, 26px 20px 0 #F1BB93, 12px 22px 0 #000, 14px 22px 0 #000, 16px 22px 0 silver, 18px 22px 0 silver, 20px 22px 0 #000, 22px 22px 0 #000, 12px 24px 0 #4A52A6, 14px 24px 0 #4A52A6, 16px 24px 0 #4A52A6, 18px 24px 0 #4A52A6, 20px 24px 0 #4A52A6, 22px 24px 0 #4A52A6, 12px 26px 0 #4A52A6, 14px 26px 0 #4A52A6, 16px 26px 0 #4A52A6, 18px 26px 0 #4A52A6, 20px 26px 0 #4A52A6, 22px 26px 0 #4A52A6, 12px 28px 0 #683037, 14px 28px 0 #683037, 18px 28px 0 #4A52A6, 20px 28px 0 #4A52A6, 22px 28px 0 #4A52A6, 18px 30px 0 #683037, 20px 30px 0 #683037, 22px 30px 0 #683037, 24px 30px 0 #683037;
+                }
+            }
+        }
+    }
+}
+
+/************************************\
+main animation
+\************************************/
+@keyframes move-comment {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(calc( (var(--comment-height) + var(--comment-margin)) * var(--comment-num) * -1));
+    }
+}
+
+@keyframes move-background {
+    0% {
+        background-position: 0 100%;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+@keyframes move-sky {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-10vw);
+    }
+}
+
+@keyframes move-sun {
+    from {
+        transform: translate(-100px, 0);
+    }
+    to {
+        transform: translate(0px, 110vw);
+    }
+}
+
+@keyframes move-moon {
+
+}
+
+@keyframes move-distantview {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-10vw);
+    }
+}
+
+@keyframes move-ground {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-40vw);
+    }
+}
+
+/************************************\
+utility
+\************************************/
+.anim__right {
+    display: inline-block;
+    font-size: 40px;
+    margin-left: 6px;
+    animation: anim__right 1s ease infinite;
+}
+@keyframes anim__right {
+    from {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.anim__flip {
+    animation: anim__flip 700ms steps(1, start) infinite;
+}
+@keyframes anim__flip {
+    50% {
+        transform: scaleX(-1);
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+.util__screen-reader-only {
+    position: absolute;
+    width: 1px;
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+    white-space: nowrap;
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>Created using only HTML/CSS, without JS and img.</h1>
+        <p>This work was created by <a href="https://kzms2.xyz/" target="_blank">kzms2<span class="util__screen-reader-only">Open a new window</span></a></p>
+    </header>
+    <main>
+        <h2 class="util__screen-reader-only">About this product.</h2>
+        <div class="materials">
+            <div class="comment">
+                <ol>
+                    <li class="comment__item comment__item--center"><p>Please scroll horizontally<span class="anim__right">👉</span></p></li>
+                    <li class="comment__item"><p>The concept of this product:<br /><strong>Pure is good</strong></p></li>
+                    <li class="comment__item"><p>I'm Kazumasa Okabe. <br />I ❤️ CSS, games, anime and cats.</p></li>
+                    <li class="comment__item"><p>I tried to create an interactive page without images and JavaScript.</p></li>
+                    <li class="comment__item"><p>This product to use "<a href="https://www.w3.org/TR/scroll-animations/" target="_blank">scroll-driven animations<span class="util__screen-reader-only">Open a new window</span></a>"<br />This function is excellent🎉</p></li>
+                    <li class="comment__item"><p>Parts of this page use legacy features such as “box shadows” and “borders”.</p></li>
+                    <li class="comment__item"><p>Let's enjoy the hackathon together!</p></li>
+                    <li class="comment__item comment__item--center"><p>Thank you for your time🥳</p></li>
+                </ol>
+            </div>
+            <div class="background"></div>
+            <div class="sky">
+                <div class="sky__far">
+                    <div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div>
+                </div>
+                <div class="sky__near">
+                    <div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div>
+                </div>
+            </div>
+            <div class="planet">
+                <div class="planet__sun"></div>
+                <div class="planet__moon"></div>
+            </div>
+            <div class="distantview">
+                <div class="distantview__far">
+                    <div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div>
+                </div>
+                <div class="distantview__near">
+                    <div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div><div class="mountain"></div>
+                </div>
+            </div>
+            <div class="character">
+                <div class="character__kzms2 anim__flip"><span></span></div>
+            </div>
+            <div class="ground"></div>
+        </div>
+    </main>
+</body>
+</html>
