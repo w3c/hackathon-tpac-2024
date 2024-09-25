@@ -110,7 +110,7 @@ const Home: React.FC<Props> = ({ submissions }) => {
               . The HTML file should include a <code>&lt;title&gt;</code> with
               your project name, and{" "}
               <code>&lt;{`meta name="author" content="Your Name"`}&gt;</code>{" "}
-              with the author(s)
+              with the author(s).
             </li>
 
             <li>
