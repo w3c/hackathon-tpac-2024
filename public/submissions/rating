@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+<head>
+<title>CSS pseudo-classes</title>
+<meta name="author" content="Estelle Weyl and Eric Meyer">
+<style>
+.rating {
+  /* make the current radio visually hidden */
+  input[type="radio"] {
+    appearance: none;
+    margin: 0;
+    box-shadow: none; /* remove shadow on invalid submit */
+  }
+
+  /* generated content is now supported on input. supporting older browsers? change button above to {position: absolute; opacity: 0;} and add a label, then style that, and change all selectors to reflect that change */
+  input[type="radio"]::after {
+    content: "\2605";
+    font-size: 32px;
+  }
+
+  /* by default, if no value is selected, all stars are grey */
+  input[type="radio"]:invalid::after {
+    color: #ddd;
+  }
+  /* get rid of white space */
+  div {
+    display: flex;
+  }
+
+  /* if the rating has focus or is hovered, make all stars darker */
+  div:hover input[type="radio"]:invalid::after,
+  div:focus-within input[type="radio"]:invalid::after {
+    color: #888;
+  }
+
+  /* make all the stars after the focused one back to light grey, until a value is selected */
+  div:hover input[type="radio"]:hover ~ input[type="radio"]:invalid::after,
+  div input[type="radio"]:focus ~ input[type="radio"]:invalid::after {
+    color: #ddd;
+  }
+
+  /* if a value is selected, make them all selected */
+  div input[type="radio"]:valid {
+    color: orange;
+  }
+  /* then make the ones coming after the selected value look inactive */
+  div input[type="radio"]:checked ~   input[type="radio"]:not(:checked)::after {
+    color: #ccc;
+    content: "\2606"; /* optional. hollow star */
+  }
+} /* end of rating */
+
+form:has(input:checked):has([value="5"]:not(:checked)) [type="submit"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+form:has(input:checked):has([value="5"]:not(:checked))::after {
+  content: "WRONG ANSWER! TRY AGAIN.";
+  color: red;
+}
+
+@layer {
+  pre, code {
+    color: dodgerblue;
+    background: #F1F7FF;
+  }
+  pre {
+    padding-block: 0.75em;
+    padding-inline: 1em;
+    border-radius: 0.75em;
+  }
+}
+
+</style>
+</head>
+<body>
+  <form>
+  <fieldset class="rating">
+    <legend>Rate this project:</legend>
+     <div>
+       <input type="radio" name="rating" value="1" aria-label="1 star" required/>
+       <input type="radio" name="rating" value="2" aria-label="2 stars"/>
+       <input type="radio" name="rating" value="3" aria-label="3 stars"/>
+       <input type="radio" name="rating" value="4" aria-label="4 stars"/>
+       <input type="radio" name="rating" value="5" aria-label="5 stars"/>
+     </div>
+    </fieldset>
+  <input type="reset">
+  <input type="submit" value="Submit a 5-star review">
+</form>
+
+<p>The HTML includes a <code>&lt;form&gt;</code> with a rating widget, and two buttons. The rating widget includes a <code>&lt;fieldset&gt;</code>, <code>&lt;legend&gt;</code>, a </code>&lt;div&gt;</code> containing five radio buttons. Users can select one of the radio buttons to rate the project. </p>
+
+<pre><code>&lt;form>
+  &lt;fieldset class="rating">
+    &lt;legend>Rate this project:&lt;/legend>
+     &lt;div>
+       &lt;input type="radio" name="rating" value="1" aria-label="1 star" required/>
+       &lt;input type="radio" name="rating" value="2" aria-label="2 stars"/>
+       &lt;input type="radio" name="rating" value="3" aria-label="3 stars"/>
+       &lt;input type="radio" name="rating" value="4" aria-label="4 stars"/>
+       &lt;input type="radio" name="rating" value="5" aria-label="5 stars"/>
+     &lt;/div>
+    &lt;/fieldset>
+  &lt;input type="reset">
+  &lt;input type="submit" value="Submit a 5-star review">
+&lt;/form>
+</code></pre>
+
+<p>We style the rating widget using CSS. The radio buttons will be made to look like stars.
+
+<p>The stars are all light grey by default. When the user hovers over the stars, the potential value is displayed via dark and light starts. When a rating is made, the stars are yellow and transparent. We also use CSS to disable submission if you don't rate this project as well as it deserved to be rated.
+
+<h2>The Project's HTML</h2>
+
+<p>The HTML includes a project rating widget within a <code>&lt;form&gt;</code>. The form is submittable when you rate the project correctly. 
+
+<p>The rating <code>&lt;fieldset&gt;</code> groups the five radio buttons, displayed as stars, with the <code>&lt;legend&gt;</code> informing the user of the purpose of the widget. We've included five same-named <code>&lt;input type="radio"&gt;</code> buttons. By using the same name, the user can only select one element in the group. We did not include a <code>&lt;label&gt;</code>, so included the <code>aria-label</code> attribute to provides a label for screen reader users. The <code>required</code> attribute means the user must select one of the radio buttons or the form will not pass constraint validation and will not be submittable until a radio button is selected. (In other words, the widget is invalid until a value is selected. This means we can use the <code>:invalid</code> pseudo-class.)
+
+<p>Once a radio button in a same-named group of radio button is selected, you can't return the group to an unchecked state without JS or resetting the form. so, we include a reset button created using an <code>&lt;input&gt;</code> of type <code>reset</code>. We also include a submit button, which we will disable if the wrong option is selected.
+
+
+<h2>Understanding the CSS functionality</h2>
+
+<p>This CSS-only widget is all possible thanks to various input-state pseudo-classes.
+  
+<h3>Stars and star colors</h3>
+
+<p>We start by hiding the radio buttons and replacing them with stars:
+
+<pre><code> /* make the current radio visually hidden */
+  input[type="radio"] {
+    appearance: none;
+    margin: 0;
+    box-shadow: none;
+  }
+/* replace with a star */ 
+input[type=radio]::after {
+  content: &#39;\2605&#39;;
+  font-size: 32px;
+}</code></pre>
+<p>The stars are all light grey by default and darker grey on hover.
+The pseudo-class that does the heavy lifting in this example is
+<code>:invalid</code>, which matches any input that has an invalid
+  value. Because of the <code>required</code> attribute, we can use the <code>:invalid</code> pseudo-class.
+
+<p>
+Since the generated stars are underpinned by radio buttons in a single
+set, the radio buttons are all invalid until one of them is selected,
+thus giving a valid value to the set. The stars are colored using:</p>
+<pre class="css"><code>input[type=radio]:invalid::after {
+  color: #ddd;
+}</code></pre>
+<p>In order to make the stars turn dark from the first up to whichever
+one is being hovered or focsused by the user, we continue to use
+<code>:invalid</code> in conjunction with interaction pseudo-classes and
+the adjacent-sibling combinator:</p>
+<pre class="css"><code>div:hover input[type=radio]:invalid::after,
+div:focus-within input[type=radio]:invalid::after {
+	color: #888;
+}
+div:hover input[type=radio]:hover ~ input[type=radio]:invalid::after,
+div input[type=radio]:focus ~ input[type=radio]:invalid::after {
+	color: #ddd;
+}</code></pre>
+<p>The first rule sets all the stars to be a medium gray as long as the
+div is hovered or has focus within itself. The second rule sets all the
+stars <em>after</em> the star being hovered/focused back to light gray,
+by saying, in effect, “if an input of <code>type=radio</code> is
+hovered/focused, select all the following sibling inputs with
+<code>type=radio</code> that are invalid and then style their
+<code>::after</code> content”.</p>
+<p>(The previous two rules could be compressed down to a single rule
+using <code>:has()</code>, but that makes things more complicated and is
+a bit beyond the scope of this tutorial.)</p>
+<p>If a star is clicked/selected, this activates the underpinning radio
+button and gives the set of radio buttons a valid value. Thus:</p>
+<pre class="css"><code>div input[type=radio]:valid {
+  color: orange;
+}</code></pre>
+<p>This sets all five stars to be orange. The stars that follow
+whichever was clicked/selected then need to be made hollow, which is
+accomplished using a rule similar to the one we saw earlier that set all
+the stars after the hovered/focused star to be light gray:</p>
+<pre class="css"><code>div input[type=radio]:checked ~ input[type=radio]:not(:checked)::after{
+  color: #ccc;
+  content: &#39;\2606&#39;; /* optional. hollow star */
+}</code></pre>
+<p>Here we used <code>:checked</code> to find the radio button that was
+activated by the click/select action, and then used the
+following-sibling combinator to grab all the following radio buttons
+that are not checked.</p>
+</body>
+<html>
