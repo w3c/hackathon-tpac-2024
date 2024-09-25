@@ -86,7 +86,38 @@ const Home: React.FC<Props> = ({ submissions }) => {
         {/* Challenge Section */}
         <section className="challenge">
           <h2>The Challenge</h2>
-          <p className="challenge-task">Coming soon...</p>
+          <p className="challenge-task">
+            Create a tutorial for a web feature or concept
+          </p>
+          <ul className="rules-list">
+            <li>This could be about an element, API, or a general topic.</li>
+            <li>Work solo or in a pair.</li>
+            <li>Time limit is 1 hour.</li>
+            <li>
+              Your project should be a single HTML file. Get as creative as you
+              like with your design and interactivity. This is your chance to
+              CSS to impress, as they say.
+            </li>
+            <li>
+              Submit it as a PR on GitHub by 9:45 PM, adding your file to the{" "}
+              <a href="https://github.com/w3c/hackathon-tpac-2024/tree/main/public/submissions">
+                submissions directory
+              </a>
+              . Include all styles within your HTML file,{" "}
+              <a href="https://github.com/w3c/hackathon-tpac-2024/blob/main/public/submissions/sample.html#L8">
+                like so
+              </a>
+              . The HTML file should include a <code>&lt;title&gt;</code> with
+              your project name, and{" "}
+              <code>&lt;{`name="author" content="Your Name"`}&gt;</code> with
+              the author(s).
+            </li>
+
+            <li>
+              Prizes will be awarded based on audience votes, so be sure to
+              stick around to vote for your favorite project!
+            </li>
+          </ul>
         </section>
 
         {/* Submissions Section */}
