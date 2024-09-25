@@ -1,0 +1,53 @@
+<!DOCTYPEhtml>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Hyojin" />
+    <title>PROJECT_NAME</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        background-color: white;
+        width: 1000px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .box {
+        display: inline-block;
+        caret-color: red;
+        caret-shape: block;
+      }
+      h1 {
+        color: #333;
+      }
+      p {
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>CSS Caret <span style="text-decoration:line-through;">Animation</span> Tutorial</h1>
+      <h2>Feature: CSS caret-animation property - https://chromestatus.com/feature/5082469066604544</h2>
+      <h2><pre>caret: <'caret-color'> || <'caret-shape'></pre></h2>
+      <h2><pre>caret-color: <'color'>></pre></h2>
+      <h2><pre>caret-shape: <'shape'>></pre></h2>
+      <textarea id="cont1" class="box" style="width: 200px; height: 200px;  border: 1px #999 solid; caret-color: red; caret-shape: box">caret-color: red; caret-shape: box</textarea>
+      <textarea id="cont2" class="box" style="width: 200px; height: 200px;  border: 1px #999 solid; caret-color: green; caret-shape: box">caret-color: green; caret-shape: box</textarea>
+      <textarea id="cont3" class="box" style="width: 200px; height: 200px;  border: 1px #999 solid; caret-color: red; caret-shape: underscore">caret-color: red; caret-shape: underscore</textarea>
+      <textarea id="cont4" class="box" style="width: 200px; height: 200px;  border: 1px #999 solid; caret-color: green; caret-shape: underscore">caret-color: green; caret-shape: underscore</textarea>
+    </div>
+  </body>
+</html>
+ 
