@@ -22,7 +22,8 @@
   input[type="radio"]:invalid::after {
     color: #ddd;
   }
-  /* get rid of white space */
+
+  /* get rid of white space between buttons */
   div {
     display: flex;
   }
@@ -48,19 +49,22 @@
     color: #ccc;
     content: "\2606"; /* optional. hollow star */
   }
-} /* end of rating */
+} /* end of rating styles */
 
+/* if a star is checked, but it's not the fifth star, disable submission via mouse */
 form:has(input:checked):has([value="5"]:not(:checked)) [type="submit"] {
   opacity: 0.5;
   pointer-events: none;
 }
 
+/* if a star is checked, but it's not the fifth star, add a message */
 form:has(input:checked):has([value="5"]:not(:checked))::after {
   content: "WRONG ANSWER! TRY AGAIN.";
   color: red;
 }
 
-@layer {
+/* css for the tutuorial */
+@layer tutorial {
   pre, code {
     color: dodgerblue;
     background: #F1F7FF;
