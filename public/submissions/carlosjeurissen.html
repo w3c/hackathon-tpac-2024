@@ -119,7 +119,6 @@ code {
       const frequency = frequencyDurationMap[playbackIndex];
       if (!frequency) {
         oscillator.stop();
-        document.documentElement.classList.add('finished');
         return;
       }
 
@@ -198,6 +197,7 @@ function playNext () {
   const frequency = frequencyDurationMap[playbackIndex];
   if (!frequency) {
     oscillator.stop();
+    document.documentElement.classList.add('finished');
     return;
   }
 
