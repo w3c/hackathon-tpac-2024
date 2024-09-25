@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Elena" />
-    <title>Sample Project</title>
+    <meta name="author" content="Igarashi" />
+    <title>Dodger Studium</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -28,21 +28,33 @@
       p {
         color: #666;
       }
+
+.field {
+	position: relative;
+	width: 1000px;
+	height: 1000px;
+	transform: rotate(45deg);
+}
+
+.field::before{
+    content:"■";
+    position: absolute;
+    color: #A35A2A;
+    font-size: 600px;
+    z-index: 1;
+    left:458px;
+    top:222px;
+}
+
+
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Sample Project</h1>
-      <p>
-        This is a sample project submission for testing. To ensure your project
-        is published correctly, make sure to include the following in your
-        submission HTML file:
-      </p>
-      <ul>
-        <li>DOCTYPE declaration</li>
-        <li>Title tag</li>
-        <li>Meta tag for author</li>
-      </ul>
+      <h1>Dodger Studium</h1>
+	<div class="field"></div>
+	<div class="stadium"></div>
     </div>
   </body>
 </html>
+
