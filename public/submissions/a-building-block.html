@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Tantek Çelik" />
+    <title>A building block</title>
+    <style>
+/* undohtml.css */
+:link,:visited,ins { text-decoration:none }
+nav ul,nav ol { list-style:none }
+h1,h2,h3,h4,h5,h6,pre,code,kbd { font-size:1em; }
+dl,ul,ol,li,
+h1,h2,h3,h4,h5,h6,
+html,body,pre,p,blockquote,
+form,fieldset,iframe,input,label
+{ margin:0; padding:0 }
+figure 
+{ margin:0; padding:0 }
+abbr, iframe, img, object,
+a img,:link img,:visited img,
+a object,:link object,:visited object
+{ border:0 }
+img, object { vertical-align:bottom }
+address,abbr { font-style:normal }
+iframe:not(.auto-link):not(.auto-embed):not(.twitter-tweet):not(.twitter-share-button):not(.auto-responses):not([srcdoc]) { display:none; visibility:hidden; margin-left: -10000px }
+
+/* elementica.css */
+body, input, button {  font-size:24px; }
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Geneva, sans-serif;
+  padding:2em 5% 2em 25%;
+  margin:auto;
+  max-width: 40em;
+  color:#000;
+  background:#fff;
+}
+/* less padding-left for BlackBerry + handhelds, mobiles with ≤480px screens. */
+@media screen\, , handheld {
+ body  { padding-left:5%;  }
+ ul,ol { padding-left:2em; }
+}
+@media screen and (max-device-width: 480px) {
+ body  { padding-left:5%;  }
+ ul,ol { padding-left:2em; }
+}
+
+body         {   line-height:2em; }
+p            { margin-top:1em; }
+blockquote   {    margin:2em; }
+ins { background:#FFC }
+div>ins { display:block }
+
+button {
+  margin:0 .5em; padding:0 1em;
+  background:#EEE;
+  border-radius:.4em; -moz-border-radius:.4em; -webkit-border-radius:.4em;
+}
+/* no button margins for BlackBerry + handhelds, mobiles with ≤480px screens. */
+/* top-aligned labels for mobile */
+@media screen\, , handheld {
+ button { margin:0; }
+ label  { display:block }
+}
+@media screen and (max-device-width: 480px) {
+ button { margin:0; }
+ label  { display:block }
+}
+
+h1,.h1 { font-size:4em;    line-height:1em;  margin:0.5em  0; }
+h2,.h2 { font-size:3em;    line-height:1em;    margin:0.67em 0; } /**/
+h3,.h3 { font-size:2em;    line-height:1em;    margin:1em    0; } /**/
+h4,.h4 { font-size:1.75em; line-height:1.72em; margin:1.14em 0; } /**/
+h5,.h5 { font-size:1.5em;  line-height:1.33em; margin:1.33em 0; } /**/
+h6,.h6 { font-size:1.33em; line-height:1.65em; margin:1.65em 0; } /*1.5*/
+hgroup h1:first-child,hgroup .h1:first-child,
+hgroup h2:first-child,hgroup .h2:first-child,
+hgroup h3:first-child,hgroup .h3:first-child,
+hgroup h4:first-child,hgroup .h4:first-child,
+hgroup h5:first-child,hgroup .h5:first-child,
+hgroup h6:first-child,hgroup .h6:first-child { margin-bottom:0; }
+
+hgroup *+h2,hgroup *+.h2,
+hgroup *+h3,hgroup *+.h3,
+hgroup *+h4,hgroup *+.h4,
+hgroup *+h5,hgroup *+.h5,
+hgroup *+h6,hgroup *+.h6                 { margin-top:0 }
+
+/* extra whitespace at top of mobile displays */
+@media screen\, , handheld {
+ h1,.h1 { margin-top:0 }
+}
+@media screen and (max-device-width: 480px) {
+ h1,.h1 { margin-top:0 }
+}
+
+footer,.footer { margin-top:4em; font-size:.667em; line-height:2em }
+footer .footer { font-size:1em; } /* avoid double-applying relative size */
+footer p,.footer p { margin:1em 0; }
+
+h1 :link, h1 :visited,
+h2 :link, h2 :visited,
+h3 :link, h3 :visited,
+h4 :link, h4 :visited,
+h5 :link, h5 :visited,
+h6 :link, h6 :visited
+{
+  color:inherit;
+  text-decoration:none;
+}
+h1 :link:hover, h1 :visited:hover, 
+h2 :link:hover, h2 :visited:hover, 
+h3 :link:hover, h3 :visited:hover, 
+h4 :link:hover, h4 :visited:hover, 
+h5 :link:hover, h5 :visited:hover, 
+h6 :link:hover, h6 :visited:hover
+{
+  text-decoration:none;
+}
+
+:link:hover,:visited:hover {text-decoration:underline}
+
+input {
+  font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Geneva, sans-serif;
+}
+
+dfn { font-style:italic }
+
+/* hackathon */
+pre>code { display:block; padding: 1em; background:#cfc }
+p code { color:#090 }
+p.demo { margin:0; padding: 1em; background:#ccc }
+
+:target { background: #ffc; font-weight:bold }
+p.blankspace { height:30em; }
+
+    </style>
+  </head>
+<body>
+<h1><code>&lt;a&gt;</code> <br /> The Most Important HTML element</h1>
+<p>
+The <code>&lt;a&gt;</code> or <em>anchor</em> element is the most powerful and flexible element in HTML. This tutorial will show you how to use it for all sorts of things.
+</p>
+
+<h2 id="hyperlinking">Hyperlinking</h2>
+<p>The <code>&lt;a&gt;</code> element is primarily used for hyperlinking so we’ll start with an example of that:
+</p>
+<pre><code>View the &lt;a href="#footer"&gt;Footer&lt;a&gt;.
+</code></pre>
+<p>
+This may draw something like:
+</p>
+<p class="demo">
+View the <a href="#footer">Footer</a>.
+</p>
+<p>
+Try clicking the link!
+</p>
+<p id="hyperlink-return">
+What happened? The <code>href</code> attribute of the  <code>&lt;a&gt;</code> element is a URL, in this case a document relative URL to another place in this document, with the <code>id</code> of <code>footer</code>.
+You may put any valid URL in the <code>href</code> attribute.
+</p>
+
+<h2 id="hyperlink-destination">Hyperlink destination</h2>
+<p>
+You can also use an <code>&lt;a&gt;</code> with an <code>id</code> attribute as the destination of a hyperlink!
+</p>
+<pre><code>You have reached the &lt;a id="destination"&gt;destination&lt;/a&gt;
+</code></pre>
+<p>
+This may draw something like:
+</p>
+<p class="demo">
+You have reached the <a id="destination">destination</a>.
+</p>
+
+<h2>Hyperlink and destination</h2>
+<p>
+You can combine these two techniques and make a hyperlink that is also a destination!
+</p>
+<pre><code>&lt;a href="#away" id="back"&gt;jump away and back&lt;/a&gt;
+</code></pre>
+<p>
+This may draw something like:
+</p>
+<p class="demo">
+<a href="#away" id="back">jump away</a>.
+</p>
+<p>
+Try clicking the link above!
+</p>
+<p>
+If you did, you should have seen the page scroll down, 
+and another link to click to jump back.
+</p>
+
+<p>
+Continue to the <a href="#a-block">next tutorial: A Block</a>.
+</p>
+
+<p class="blankspace">&nbsp;</p>
+
+
+<p>
+Now click this link to <a href="#back" id="away">jump back</a>
+</p>
+
+<p class="blankspace">&nbsp;</p>
+
+<h2 id="a-block">A block</h2>
+
+<p>
+Thanks to the power of CSS, you can style an <code>&lt;a&gt;</code> element to contain a whole block of text, with some spacing like a paragraph:
+</p>
+
+<pre><code>… the end of some text.
+
+&lt;a style="display:block; margin:1em 0"&gt;Here is a block&lt;/a&gt;
+
+Some more text.
+</code></pre>
+
+<p>
+This may draw something like:
+</p>
+<p class="demo">
+… the end of some text.
+
+<a style="display:block; margin:1em 0">Here is a block</a>
+
+Some more text.
+</p>
+<p>
+While the <code>&lt;a&gt;</code> element can be used this way, 
+please use a semantic <code>&lt;p&gt;</code> element instead in practice.
+</p>
+
+<h2>Many more roles for A using ARIA</h2>
+
+<p>
+Using the 
+<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles">ARIA role attribute</a>
+you can redefine an <code>&lt;a&gt;</code> element to perform many more roles as it were.
+</p>
+<p>
+Using CSS attribute selectors which detect such <code>&lt;a&gt;</code> elements with specific <code>role</code> attributes, you can style them to also appear consistent with their roles.
+</p>
+<p> 
+See the 
+<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles">MDN Documentation on WAI-ARIA Roles</a> for the list of <code>role</code> attribute values you can use to turn <code>&lt;a&gt;</code> elements into so many more things which are left as an exercise for the hacker.
+</p>
+
+<p>I hope you enjoyed this tutorial!</p>
+
+
+
+<p class="blankspace">&nbsp;</p>
+
+<footer id="footer">
+<h2>Footer</h2>
+<p>
+This tutorial was written by <a class="h-card" href="https://tantek.com/">Tantek Çelik</a> on 2024-09-24 at the W3C TPAC conference, based on some unpublished thoughts originally intended for a book titled “HTML: The Good Parts”.
+</p>
+<p>
+If you scrolled here from the start of this tutorial, here’s a link to return:
+</p>
+<p>
+<a href="#hyperlink-return">Return to the Hyperlink tutorial</a>.
+</p>
+<p>
+Still here? Click the link above!
+</p>
+</footer>
+</body>
+</html>
