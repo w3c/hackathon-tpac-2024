@@ -22,14 +22,12 @@ html {
   background: darkblue;
 }
 
-html.enabled {
-  code {
-    color: #fff;
-  }
+.finished code {
+  color: #fff;
+}
 
-  #connector {
-    left: 115px;
-  }
+.enabled #connector {
+  left: 115px;
 }
 
 
@@ -121,6 +119,7 @@ code {
       const frequency = frequencyDurationMap[playbackIndex];
       if (!frequency) {
         oscillator.stop();
+        document.documentElement.classList.add('finished');
         return;
       }
 
