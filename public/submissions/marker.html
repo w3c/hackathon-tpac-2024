@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<name="author" content="Oriol Brufau">
+<title>Styling list markers</title>
+<style>
+html {
+  background: #333;
+  margin: 1em;
+  min-height: 100vh;
+}
+@keyframes bg-anim {
+  from { transform: scale(10) rotate(0deg) }
+  to { transform: scale(10) rotate(360deg) }
+}
+html::before {
+  content: "";
+  position: fixed;
+  animation: bg-anim infinite 5s linear;
+  background: repeating-conic-gradient(#000 0%, #333 10%, #000 20%);
+  z-index: -1;
+  inset: 0;
+}
+body {
+  max-width: 800px;
+  background: #ccc;
+  color: #000;
+  border: 5px outset;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 1em;
+}
+pre {
+  border: solid;
+  background: #333;
+  color: #fff;
+  padding: 1em;
+}
+iframe {
+  background: #fff;
+  color: #000;
+  display: block;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  width: stretch;
+}
+</style>
+<h1>Styling list markers</h1>
+<p>Let's say you have a list:</p>
+<pre><code>&lt;ul&gt;
+  &lt;li&gt;W3C&lt;/li&gt;
+  &lt;li&gt;Web&lt;/li&gt;
+  &lt;li&gt;TPAC&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<iframe srcdoc='
+<ul>
+  <li>W3C</li>
+  <li>Web</li>
+  <li>TPAC</li>
+</ul>
+'></iframe>
+
+<p>But what if you want to style the bullets to look more amazing? Then <code>::marker</code> comes to the rescue!</p>
+<pre><code>&lt;style&gt;
+::marker { font-size: 200%; content: attr(data-marker) " " }
+&lt;/style&gt;
+&lt;ul&gt;
+  &lt;li data-marker="🦄"&gt;W3C&lt;/li&gt;
+  &lt;li data-marker="😍"&gt;Web&lt;/li&gt;
+  &lt;li data-marker="🗣️"&gt;TPAC&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<iframe srcdoc='
+<style>
+::marker { font-size: 200%; content: attr(data-marker) " " }
+</style>
+<ul>
+  <li data-marker="🦄">W3C</li>
+  <li data-marker="😍">Web</li>
+  <li data-marker="🗣️">TPAC</li>
+</ul>
+'></iframe>
+
+<p><code>::marker</code> is a <a href="https://drafts.csswg.org/css-pseudo/#treelike">tree-abiding pseudo-element</a>,
+just like <code>::before</code> and <code>::after</code>. However, it only accepts a limited subset of properties.</p>
+
+<p>One of these properties is <code>content</code>. By default it's set to <code>normal</code>, but you can set it to <code>none</code> to suppress it, or to the desired string, <code>url()</code>, <code>counter()</code>, etc.</p>
+
+<p>It can also be styled with any inherited property, like <code>font-size</code>. Even if it has no direct effect on the marker box itself, it will still be able to affect its contents.</p>
+
+<p>And you can even use animations and transitions!</p>
+
+<pre><code>&lt;style&gt;
+@keyframes anim {
+  from { color: blue }
+  to { color: orange }
+}
+::marker {
+  animation: anim 1s infinite alternate linear;
+  font-weight: bold;
+  font-size: 200%;
+}
+&lt;/style&gt;
+&lt;ol&gt;
+  &lt;li&gt;W3C&lt;/li&gt;
+  &lt;li&gt;Web&lt;/li&gt;
+  &lt;li&gt;TPAC&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+<iframe srcdoc='
+<style>
+@keyframes anim {
+  from { color: blue }
+  to { color: orange }
+}
+::marker {
+  animation: anim 1s infinite alternate linear;
+  font-weight: bold;
+  font-size: 200%;
+}
+</style>
+<ol>
+  <li>W3C</li>
+  <li>Web</li>
+  <li>TPAC</li>
+</ol>
+'></iframe>
+
+<p>When customizing the contents of the <code>::marker</code>, it can be convinient to use <code>counter(list-item)</code> to get the number of the current list item:</p>
+
+<pre><code>&lt;style&gt;
+::marker {
+  content: "[" counter(list-item) "] ";
+}
+&lt;/style&gt;
+&lt;ol&gt;
+  &lt;li&gt;W3C&lt;/li&gt;
+  &lt;li&gt;Web&lt;/li&gt;
+  &lt;li&gt;TPAC&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+<iframe srcdoc='
+<style>
+::marker {
+  content: "[" counter(list-item) "] ";
+}
+</style>
+<ol>
+  <li>W3C</li>
+  <li>Web</li>
+  <li>TPAC</li>
+</ol>
+'></iframe>
+
+<p>However, in that case it's probably more convenient to use another tool: <code>@counter-style</code>.</p>
+<p>This at-rule lets you create a custom list style that can then be referenced in <code>list-style-type</code>:</p>
+
+<pre><code>&lt;style&gt;
+@counter-style my-style {
+  system: extends decimal;
+  prefix: "[";
+  suffix: "] ";
+}
+ol {
+  list-style-type: my-style
+}
+&lt;/style&gt;
+&lt;ol&gt;
+  &lt;li&gt;W3C&lt;/li&gt;
+  &lt;li&gt;Web&lt;/li&gt;
+  &lt;li&gt;TPAC&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+<iframe srcdoc='
+<style>
+@counter-style my-style {
+  system: extends decimal;
+  prefix: "[";
+  suffix: "] ";
+}
+ol {
+  list-style-type: my-style
+}
+</style>
+<ol>
+  <li>W3C</li>
+  <li>Web</li>
+  <li>TPAC</li>
+</ol>
+'></iframe>
+
+<p>However, for very simple cases, it's probably easier to set <code>list-style-type</code> to a string:</p>
+<pre><code>&lt;ul&gt;
+  &lt;li style="list-style-type: '🦄 '"&gt;W3C&lt;/li&gt;
+  &lt;li style="list-style-type: '😍 '"&gt;Web&lt;/li&gt;
+  &lt;li style="list-style-type: '🗣️ '"&gt;TPAC&lt;/li&gt;
+&lt;/ul&gt;</code></code></pre>
+<iframe srcdoc='
+<ul>
+  <li style="list-style-type: &#39;🦄 &#39;">W3C</li>
+  <li style="list-style-type: &#39;😍 &#39;">Web</li>
+  <li style="list-style-type: &#39;🗣️ &#39;">TPAC</li>
+</ul>
+'></iframe>
